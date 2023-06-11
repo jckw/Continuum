@@ -5,12 +5,12 @@
 //  Created by Jack on 10/06/2023.
 //
 
-import WidgetKit
 import SwiftUI
+import WidgetKit
 
 @main
 struct TrackBundle: WidgetBundle {
-    var body: some Widget {
-        Track()
-    }
+  var body: some Widget {
+    Track()
+  }
 }
