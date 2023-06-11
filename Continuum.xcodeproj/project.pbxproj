@@ -16,8 +16,6 @@
 		04DBD2852A3522C600FBD179 /* TrackBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DBD2842A3522C600FBD179 /* TrackBundle.swift */; };
 		04DBD2892A3522C600FBD179 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DBD2882A3522C600FBD179 /* Track.swift */; };
 		04DBD28C2A3522C700FBD179 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04DBD28B2A3522C700FBD179 /* Assets.xcassets */; };
-		04DBD28E2A3522C700FBD179 /* Track.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 04DBD28A2A3522C600FBD179 /* Track.intentdefinition */; };
-		04DBD28F2A3522C700FBD179 /* Track.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 04DBD28A2A3522C600FBD179 /* Track.intentdefinition */; };
 		04DBD2922A3522C700FBD179 /* TrackExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 04DBD27D2A3522C600FBD179 /* TrackExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -57,7 +55,6 @@
 		04DBD2812A3522C600FBD179 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		04DBD2842A3522C600FBD179 /* TrackBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackBundle.swift; sourceTree = "<group>"; };
 		04DBD2882A3522C600FBD179 /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
-		04DBD28A2A3522C600FBD179 /* Track.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Track.intentdefinition; sourceTree = "<group>"; };
 		04DBD28B2A3522C700FBD179 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		04DBD28D2A3522C700FBD179 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04DBD2972A3528CC00FBD179 /* TrackExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TrackExtension.entitlements; sourceTree = "<group>"; };
@@ -86,7 +83,6 @@
 		04DBD2562A3516AD00FBD179 = {
 			isa = PBXGroup;
 			children = (
-				04DBD2972A3528CC00FBD179 /* TrackExtension.entitlements */,
 				04DBD2612A3516AD00FBD179 /* Continuum */,
 				04DBD2832A3522C600FBD179 /* Track */,
 				04DBD27E2A3522C600FBD179 /* Frameworks */,
@@ -135,9 +131,9 @@
 		04DBD2832A3522C600FBD179 /* Track */ = {
 			isa = PBXGroup;
 			children = (
+				04DBD2972A3528CC00FBD179 /* TrackExtension.entitlements */,
 				04DBD2842A3522C600FBD179 /* TrackBundle.swift */,
 				04DBD2882A3522C600FBD179 /* Track.swift */,
-				04DBD28A2A3522C600FBD179 /* Track.intentdefinition */,
 				04DBD28B2A3522C700FBD179 /* Assets.xcassets */,
 				04DBD28D2A3522C700FBD179 /* Info.plist */,
 			);
@@ -245,7 +241,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04DBD28F2A3522C700FBD179 /* Track.intentdefinition in Sources */,
 				04DBD2652A3516AD00FBD179 /* ContentView.swift in Sources */,
 				04DBD2632A3516AD00FBD179 /* ContinuumApp.swift in Sources */,
 			);
@@ -255,7 +250,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04DBD28E2A3522C700FBD179 /* Track.intentdefinition in Sources */,
 				04DBD2852A3522C600FBD179 /* TrackBundle.swift in Sources */,
 				04DBD2892A3522C600FBD179 /* Track.swift in Sources */,
 			);
@@ -322,7 +316,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -378,7 +372,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -424,7 +418,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Continuum/ContinuumRelease.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Continuum/Continuum.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Continuum/Preview Content\"";
@@ -454,7 +448,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = TrackExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Track/TrackExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = G2Q4VASTYV;
@@ -462,7 +456,7 @@
 				INFOPLIST_FILE = Track/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Continuum Track";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -484,7 +478,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = TrackExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Track/TrackExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = G2Q4VASTYV;
@@ -492,7 +486,7 @@
 				INFOPLIST_FILE = Track/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Continuum Track";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

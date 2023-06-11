@@ -9,12 +9,12 @@ import WidgetKit
 import SwiftUI
 import Intents
 
-struct Provider: IntentTimelineProvider {
+struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationIntent(), progress: 20, mode: .day)
+        SimpleEntry(date: Date(), progress: 20, mode: .day)
     }
     
-    func calculateProgressAndMode(now: Date, startTime: Date, endTime: Date) -> (progress: Int, mode: Mode) {
+    static func calculateProgressAndMode(now: Date, startTime: Date, endTime: Date) -> (progress: Int, mode: Mode) {
         var endMins = Calendar.current.component(.hour, from: endTime) * 60 + Calendar.current.component(.minute, from: endTime)
         let startMins = Calendar.current.component(.hour, from: startTime) * 60 + Calendar.current.component(.minute, from: startTime)
         var currentMins = Calendar.current.component(.hour, from: now) * 60 + Calendar.current.component(.minute, from: now)
@@ -63,23 +63,23 @@ struct Provider: IntentTimelineProvider {
         return (startTime, endTime)
     }
     
-    func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
+    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
         let (startTime, endTime) = getStartEndTime()
         let currentDate = Date()
-        let (progress, mode) = calculateProgressAndMode(now: currentDate, startTime: startTime, endTime: endTime)
+        let (progress, mode) = Provider.calculateProgressAndMode(now: currentDate, startTime: startTime, endTime: endTime)
         
-        completion(SimpleEntry(date: Date(), configuration: configuration, progress: progress, mode: mode))
+        completion(SimpleEntry(date: Date(), progress: progress, mode: mode))
     }
     
     
-    func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
+    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         var entries: [SimpleEntry] = []
         let (startTime, endTime) = getStartEndTime()
         let currentDate = Date()
         for minuteOffset in 0 ..< 24*60 {
             let entryDate = Calendar.current.date(byAdding: .minute, value: minuteOffset, to: currentDate)!
-            let (progress, mode) = calculateProgressAndMode(now: currentDate, startTime: startTime, endTime: endTime)
-            let entry = SimpleEntry(date: entryDate, configuration: configuration, progress: progress, mode: mode)
+            let (progress, mode) = Provider.calculateProgressAndMode(now: entryDate, startTime: startTime, endTime: endTime)
+            let entry = SimpleEntry(date: entryDate, progress: progress, mode: mode)
             entries.append(entry)
         }
         
@@ -102,26 +102,26 @@ enum Mode {
 
 struct SimpleEntry: TimelineEntry {
     let date: Date
-    let configuration: ConfigurationIntent
     let progress: Int
     let mode: Mode
 }
-
-
 
 struct TrackEntryView : View {
     var entry: Provider.Entry
     
     var body: some View {
         VStack {
-            Text(entry.date, style: .time).frame(maxWidth: .infinity, alignment: .leading).padding(.leading).padding(.top).font(.caption2)
+            HStack {
+                Image(systemName: entry.mode == .day ? "sun.min" : "moon").font(.caption2)
+                Text(entry.date, style: .time).font(.system(.caption2, design: .rounded).bold())
+                
+            }.padding(.leading).padding(.top).frame(maxWidth: .infinity, alignment: .leading)
             Spacer()
-            Text("\(entry.progress)%").font(.largeTitle).fontWeight(.bold)
+            Text("\(entry.progress)%").font(.system(.largeTitle, design: .rounded)).fontWeight(.bold)
             Text("through the \(entry.mode.name)")
             Spacer()
-            Text("\( 100 - entry.progress)% remaining").font(.caption).padding(.top, 8).padding(.bottom)
-            
-        }
+            Text("\( 100 - entry.progress)% remaining").font(Font.system(.caption, design: .rounded)).padding(.top, 8).padding(.bottom)
+        }.environment(\.font, Font.system(.body, design: .rounded))
         
     }
 }
@@ -130,17 +130,19 @@ struct Track: Widget {
     let kind: String = "Track"
     
     var body: some WidgetConfiguration {
-        IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
+        StaticConfiguration(kind: kind, provider: Provider()) { entry in
             TrackEntryView(entry: entry)
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("Continuum Clock")
+        .description("See how much time you have at a glance.")
+        .supportedFamilies([.systemSmall])
     }
 }
 
 struct Track_Previews: PreviewProvider {
     static var previews: some View {
-        TrackEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), progress: 23, mode: .day))
+        let (progress, mode) = Provider.calculateProgressAndMode(now: Date(), startTime: Provider.defaultDate(hour: 9, minute: 0), endTime: Provider.defaultDate(hour: 23, minute: 0))
+        TrackEntryView(entry: SimpleEntry(date: Date(), progress: progress, mode: mode))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }
