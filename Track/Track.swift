@@ -35,6 +35,10 @@ struct Provider: TimelineProvider {
       currentMins += 24 * 60
     }
 
+    if currentMins == endMins {
+      return (0, .day)
+    }
+      
     let progress: Int
     let mode: Mode
     if currentMins > endMins {
