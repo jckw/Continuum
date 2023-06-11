@@ -7,7 +7,25 @@
 		<key>Continuum.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>TrackExtension.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>04DBD25E2A3516AD00FBD179</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>04DBD27C2A3522C600FBD179</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
