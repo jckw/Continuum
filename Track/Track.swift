@@ -10,6 +10,8 @@ import SwiftUI
 import WidgetKit
 
 struct Provider: TimelineProvider {
+  let sharedUserDefaults = UserDefaults(suiteName: "group.xyz.jackw.continuum")!
+
   func placeholder(in context: Context) -> SimpleEntry {
     SimpleEntry(date: Date(), progress: 20, mode: .day)
   }
@@ -38,7 +40,7 @@ struct Provider: TimelineProvider {
     if currentMins == endMins {
       return (0, .day)
     }
-      
+
     let progress: Int
     let mode: Mode
     if currentMins > endMins {
@@ -53,26 +55,12 @@ struct Provider: TimelineProvider {
     return (progress, mode)
   }
 
-  static func defaultDate(hour: Int, minute: Int) -> Date {
-    var components = Calendar.current.dateComponents([.year, .month, .day], from: Date())
-    components.hour = hour
-    components.minute = minute
-    return Calendar.current.date(from: components) ?? Date()
-  }
-
   func getStartEndTime() -> (startTime: Date, endTime: Date) {
-    let startTime: Date
-    let endTime: Date
-    if let sharedUserDefaults = UserDefaults(suiteName: "group.xyz.jackw.continuum") {
-      let startTimeInterval = sharedUserDefaults.double(forKey: "startTime")
-      let endTimeInterval = sharedUserDefaults.double(forKey: "endTime")
+    let startTimeStr = sharedUserDefaults.string(forKey: "startTimeStr") ?? "09:00"
+    let endTimeStr = sharedUserDefaults.string(forKey: "endTimeStr") ?? "23:00"
 
-      startTime = Date(timeIntervalSinceReferenceDate: startTimeInterval)
-      endTime = Date(timeIntervalSinceReferenceDate: endTimeInterval)
-    } else {
-      startTime = Provider.defaultDate(hour: 9, minute: 0)
-      endTime = Provider.defaultDate(hour: 23, minute: 0)
-    }
+    let startTime = DateStrings.date(from: startTimeStr)
+    let endTime = DateStrings.date(from: endTimeStr)
 
     return (startTime, endTime)
   }
@@ -90,7 +78,7 @@ struct Provider: TimelineProvider {
     var entries: [SimpleEntry] = []
     let (startTime, endTime) = getStartEndTime()
     let currentDate = Date()
-    for minuteOffset in 0..<24 * 60 {
+    for minuteOffset in 0..<1440 {
       let entryDate = Calendar.current.date(
         byAdding: .minute, value: minuteOffset, to: currentDate)!
       let (progress, mode) = Provider.calculateProgressAndMode(
@@ -159,9 +147,14 @@ struct Track: Widget {
 struct Track_Previews: PreviewProvider {
   static var previews: some View {
     let (progress, mode) = Provider.calculateProgressAndMode(
-      now: Date(), startTime: Provider.defaultDate(hour: 9, minute: 0),
-      endTime: Provider.defaultDate(hour: 23, minute: 0))
-    TrackEntryView(entry: SimpleEntry(date: Date(), progress: progress, mode: mode))
-      .previewContext(WidgetPreviewContext(family: .systemSmall))
+      now: DateStrings.date(from: "17:00"),
+      startTime: DateStrings.date(from: "09:00"),
+      endTime: DateStrings.date(from: "00:00")
+    )
+    TrackEntryView(
+      entry: SimpleEntry(
+        date: DateStrings.date(from: "17:00"), progress: progress, mode: mode)
+    )
+    .previewContext(WidgetPreviewContext(family: .systemSmall))
   }
 }

@@ -15,25 +15,11 @@ struct ContentView: View {
   @State private var endTime: Date
 
   init() {
-    let startTimeInterval = sharedUserDefaults.double(forKey: "startTime")
-    let endTimeInterval = sharedUserDefaults.double(forKey: "endTime")
+    let startTimeStr = sharedUserDefaults.string(forKey: "startTimeStr") ?? "09:00"
+    let endTimeStr = sharedUserDefaults.string(forKey: "endTimeStr") ?? "23:00"
 
-    let defaultStartTime = ContentView.defaultDate(hour: 9, minute: 0)
-    let defaultEndTime = ContentView.defaultDate(hour: 23, minute: 0)
-
-    _startTime = State(
-      initialValue: startTimeInterval != 0.0
-        ? Date(timeIntervalSinceReferenceDate: startTimeInterval) : defaultStartTime)
-    _endTime = State(
-      initialValue: endTimeInterval != 0.0
-        ? Date(timeIntervalSinceReferenceDate: endTimeInterval) : defaultEndTime)
-  }
-
-  static func defaultDate(hour: Int, minute: Int) -> Date {
-    var components = Calendar.current.dateComponents([.year, .month, .day], from: Date())
-    components.hour = hour
-    components.minute = minute
-    return Calendar.current.date(from: components) ?? Date()
+    _startTime = State(initialValue: DateStrings.date(from: startTimeStr))
+    _endTime = State(initialValue: DateStrings.date(from: endTimeStr))
   }
 
   var body: some View {
@@ -55,11 +41,8 @@ struct ContentView: View {
       }
 
       Button("Save") {
-        let startTimeInterval = startTime.timeIntervalSinceReferenceDate
-        let endTimeInterval = endTime.timeIntervalSinceReferenceDate
-
-        sharedUserDefaults.set(startTimeInterval, forKey: "startTime")
-        sharedUserDefaults.set(endTimeInterval, forKey: "endTime")
+        sharedUserDefaults.set(DateStrings.string(from: startTime), forKey: "startTimeStr")
+        sharedUserDefaults.set(DateStrings.string(from: endTime), forKey: "endTimeStr")
 
         WidgetCenter.shared.reloadAllTimelines()
       }
