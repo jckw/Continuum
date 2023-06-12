@@ -9,7 +9,7 @@ import SwiftUI
 import WidgetKit
 
 struct ContentView: View {
-  let sharedUserDefaults = UserDefaults(suiteName: "group.xyz.jackw.continuum")!
+  let sharedUserDefaults = UserDefaults(suiteName: "G2Q4VASTYV.group.xyz.jackw.continuum")!
 
   @State private var startTime: Date
   @State private var endTime: Date
@@ -23,32 +23,31 @@ struct ContentView: View {
   }
 
   var body: some View {
-    VStack {
-      HStack {
-        Text("Start of day")
-        Spacer()
-        DatePicker("Start Time", selection: $startTime, displayedComponents: .hourAndMinute)
-          .datePickerStyle(.compact)
-          .labelsHidden()
+    VStack(alignment: .leading) {
+      Text("Continuum").font(.title).fontWeight(.medium)
 
-      }
-      HStack {
-        Text("End of day")
-        Spacer()
-        DatePicker("End Time", selection: $endTime, displayedComponents: .hourAndMinute)
-          .datePickerStyle(.compact)
-          .labelsHidden()
-      }
+      DatePicker("Start of Day", selection: $startTime, displayedComponents: .hourAndMinute)
+        .datePickerStyle(.compact)
+        .onChange(of: startTime) { newValue in
+          sharedUserDefaults.set(DateStrings.string(from: newValue), forKey: "startTimeStr")
+          WidgetCenter.shared.reloadAllTimelines()
+        }
+      DatePicker("End of Day", selection: $endTime, displayedComponents: .hourAndMinute)
+        .datePickerStyle(.compact)
+        .onChange(of: endTime) { newValue in
+          sharedUserDefaults.set(DateStrings.string(from: endTime), forKey: "endTimeStr")
+          WidgetCenter.shared.reloadAllTimelines()
 
-      Button("Save") {
-        sharedUserDefaults.set(DateStrings.string(from: startTime), forKey: "startTimeStr")
-        sharedUserDefaults.set(DateStrings.string(from: endTime), forKey: "endTimeStr")
+        }
 
-        WidgetCenter.shared.reloadAllTimelines()
-      }
       Spacer()
     }
+
     .padding()
+    .onAppear(perform: { () in
+      WidgetCenter.shared.reloadTimelines(ofKind: "Track")
+        print("SHould have reloaded timeline")
+    })
   }
 }
 
