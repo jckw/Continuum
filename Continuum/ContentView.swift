@@ -9,7 +9,7 @@ import SwiftUI
 import WidgetKit
 
 struct ContentView: View {
-  let sharedUserDefaults = UserDefaults(suiteName: "G2Q4VASTYV.group.xyz.jackw.continuum")!
+  let sharedUserDefaults = UserDefaults(suiteName: "group.G2Q4VASTYV.xyz.jackw.continuum")!
 
   @State private var startTime: Date
   @State private var endTime: Date
@@ -37,17 +37,10 @@ struct ContentView: View {
         .onChange(of: endTime) { newValue in
           sharedUserDefaults.set(DateStrings.string(from: endTime), forKey: "endTimeStr")
           WidgetCenter.shared.reloadAllTimelines()
-
         }
-
       Spacer()
     }
-
     .padding()
-    .onAppear(perform: { () in
-      WidgetCenter.shared.reloadTimelines(ofKind: "Track")
-        print("SHould have reloaded timeline")
-    })
   }
 }
 

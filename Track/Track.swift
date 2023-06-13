@@ -9,7 +9,7 @@ import SwiftUI
 import WidgetKit
 
 struct Provider: TimelineProvider {
-  let sharedUserDefaults = UserDefaults(suiteName: "G2Q4VASTYV.group.xyz.jackw.continuum")!
+  let sharedUserDefaults = UserDefaults(suiteName: "group.G2Q4VASTYV.xyz.jackw.continuum")!
 
   func placeholder(in context: Context) -> SimpleEntry {
     SimpleEntry(date: Date(), startTimeStr: "09:00", endTimeStr: "23:00")
@@ -28,20 +28,20 @@ struct Provider: TimelineProvider {
   }
 
   func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
-      print("Timelines are being recalculated...!!!")
     var entries: [SimpleEntry] = []
     let (startTimeStr, endTimeStr) = getStartEndTimeStr()
     let currentDate = Date()
 
-    for minuteOffset in 0..<24 * 60 {
+    // TODO: Consider only rendering % increases
+    // Watch out here: increasing the number of entries rendered can cause the widget to exceed 30MB memory and crash it
+    for minuteOffset in 0..<6 * 60 {
       let entryDate = Calendar.current.date(
-        byAdding: .minute, value: minuteOffset, to: currentDate)!
+        byAdding: .minute, value: minuteOffset, to: currentDate)!.zeroSeconds!
       let entry = SimpleEntry(date: entryDate, startTimeStr: startTimeStr, endTimeStr: endTimeStr)
       entries.append(entry)
     }
 
     let timeline = Timeline(entries: entries, policy: .atEnd)
-      print(entries)
     completion(timeline)
   }
 }
@@ -106,6 +106,7 @@ struct TrackEntryView: View {
 
   var body: some View {
     let (progress, mode) = self.calculateProgressAndMode(now: entry.date)
+    let remaining = 100 - progress
 
     VStack {
       HStack {
@@ -117,9 +118,9 @@ struct TrackEntryView: View {
       Text("\(progress)%").font(.system(.largeTitle, design: .rounded)).fontWeight(.bold)
       Text("through the \(mode.name)")
       Spacer()
-      Text("\( 100 - progress)% remaining").font(Font.system(.caption, design: .rounded))
+      Text("\(100 - progress)% remaining").font(.system(.caption, design: .rounded))
         .padding(.top, 8).padding(.bottom)
-    }.environment(\.font, Font.system(.body, design: .rounded))
+    }
 
   }
 }
@@ -128,7 +129,10 @@ struct Track: Widget {
   let kind: String = "Track"
 
   var body: some WidgetConfiguration {
-    StaticConfiguration(kind: kind, provider: Provider()) { entry in
+    StaticConfiguration(
+      kind: kind,
+      provider: Provider()
+    ) { entry in
       TrackEntryView(entry: entry)
     }
     .configurationDisplayName("Continuum Clock")
