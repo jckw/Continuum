@@ -1,6 +1,6 @@
 //
-//  Track.swift
-//  Track
+//  Widget.swift
+//  Widget
 //
 //  Created by Jack on 10/06/2023.
 //
@@ -64,7 +64,7 @@ struct SimpleEntry: TimelineEntry {
   let endTimeStr: String
 }
 
-struct TrackEntryView: View {
+struct WidgetEntryView: View {
   var entry: Provider.Entry
 
   func calculateProgressAndMode(now: Date) -> (
@@ -116,15 +116,15 @@ struct TrackEntryView: View {
   }
 }
 
-struct Track: Widget {
-  let kind: String = "Track"
+struct ContinuumWidget: Widget {
+  let kind: String = "Widget"
 
   var body: some WidgetConfiguration {
     StaticConfiguration(
       kind: kind,
       provider: Provider()
     ) { entry in
-      TrackEntryView(entry: entry)
+      WidgetEntryView(entry: entry)
     }
     .configurationDisplayName("Continuum Clock")
     .description("See how much time you have at a glance.")
@@ -132,9 +132,9 @@ struct Track: Widget {
   }
 }
 
-struct Track_Previews: PreviewProvider {
+struct Widget_Previews: PreviewProvider {
   static var previews: some View {
-    TrackEntryView(
+    WidgetEntryView(
       entry: SimpleEntry(
         date: Date(),
         startTimeStr: "09:00",
