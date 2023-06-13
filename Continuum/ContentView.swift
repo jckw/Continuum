@@ -26,13 +26,13 @@ struct ContentView: View {
     NavigationView {
       List {
         Section {
-          DatePicker("Start of Day", selection: $startTime, displayedComponents: .hourAndMinute)
+          DatePicker("Start of day", selection: $startTime, displayedComponents: .hourAndMinute)
             .datePickerStyle(.compact)
             .onChange(of: startTime) { newValue in
               sharedUserDefaults.set(DateStrings.string(from: newValue), forKey: "startTimeStr")
               WidgetCenter.shared.reloadAllTimelines()
             }
-          DatePicker("End of Day", selection: $endTime, displayedComponents: .hourAndMinute)
+          DatePicker("End of day", selection: $endTime, displayedComponents: .hourAndMinute)
             .datePickerStyle(.compact)
             .onChange(of: endTime) { newValue in
               sharedUserDefaults.set(DateStrings.string(from: endTime), forKey: "endTimeStr")
@@ -43,10 +43,12 @@ struct ContentView: View {
         }
         Section {
           HStack {
-            Text("Total minutes")
+            Text("Waking time")
             Spacer()
-            Text("dist")
+            Text("\(DateStrings.clockwiseDistance(from: startTime, to: endTime)!) minutes")
           }
+        } header: {
+          Text("STATS")
         }
       }
       .listStyle(InsetGroupedListStyle())
