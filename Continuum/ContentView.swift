@@ -18,29 +18,40 @@ struct ContentView: View {
     let startTimeStr = sharedUserDefaults.string(forKey: "startTimeStr") ?? "09:00"
     let endTimeStr = sharedUserDefaults.string(forKey: "endTimeStr") ?? "23:00"
 
-    _startTime = State(initialValue: DateStrings.date(from: startTimeStr))
-    _endTime = State(initialValue: DateStrings.date(from: endTimeStr))
+    _startTime = State(initialValue: DateStrings.date(from: startTimeStr)!)
+    _endTime = State(initialValue: DateStrings.date(from: endTimeStr)!)
   }
 
   var body: some View {
-    VStack(alignment: .leading) {
-      Text("Continuum").font(.title).fontWeight(.medium)
-
-      DatePicker("Start of Day", selection: $startTime, displayedComponents: .hourAndMinute)
-        .datePickerStyle(.compact)
-        .onChange(of: startTime) { newValue in
-          sharedUserDefaults.set(DateStrings.string(from: newValue), forKey: "startTimeStr")
-          WidgetCenter.shared.reloadAllTimelines()
+    NavigationView {
+      List {
+        Section {
+          DatePicker("Start of Day", selection: $startTime, displayedComponents: .hourAndMinute)
+            .datePickerStyle(.compact)
+            .onChange(of: startTime) { newValue in
+              sharedUserDefaults.set(DateStrings.string(from: newValue), forKey: "startTimeStr")
+              WidgetCenter.shared.reloadAllTimelines()
+            }
+          DatePicker("End of Day", selection: $endTime, displayedComponents: .hourAndMinute)
+            .datePickerStyle(.compact)
+            .onChange(of: endTime) { newValue in
+              sharedUserDefaults.set(DateStrings.string(from: endTime), forKey: "endTimeStr")
+              WidgetCenter.shared.reloadAllTimelines()
+            }
+        } header: {
+          Text("CONFIG")
         }
-      DatePicker("End of Day", selection: $endTime, displayedComponents: .hourAndMinute)
-        .datePickerStyle(.compact)
-        .onChange(of: endTime) { newValue in
-          sharedUserDefaults.set(DateStrings.string(from: endTime), forKey: "endTimeStr")
-          WidgetCenter.shared.reloadAllTimelines()
+        Section {
+          HStack {
+            Text("Total minutes")
+            Spacer()
+            Text("dist")
+          }
         }
-      Spacer()
+      }
+      .listStyle(InsetGroupedListStyle())
+      .navigationTitle("Continuum")
     }
-    .padding()
   }
 }
 

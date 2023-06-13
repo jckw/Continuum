@@ -70,43 +70,34 @@ struct TrackEntryView: View {
   func calculateProgressAndMode(now: Date) -> (
     progress: Int, mode: Mode
   ) {
-    let (endH, endM) = DateStrings.splitTimeStr(entry.endTimeStr)!
-    let (startH, startM) = DateStrings.splitTimeStr(entry.startTimeStr)!
-    var endMins = endH * 60 + endM
-    let startMins = startH * 60 + startM
-    var currentMins =
-      Calendar.current.component(.hour, from: now) * 60
-      + Calendar.current.component(.minute, from: now)
-
-    if endMins < startMins {
-      endMins += 24 * 60
-    }
-
-    if currentMins < startMins {
-      currentMins += 24 * 60
-    }
-
-    if currentMins == endMins {
-      return (0, .day)
-    }
+    let startToEndMins =
+      DateStrings.clockwiseDistance(from: entry.startTimeStr, to: entry.endTimeStr) ?? 0
+    let startToNowMins =
+      DateStrings.clockwiseDistance(from: entry.startTimeStr, to: now) ?? 0
+    let endToNowMins = DateStrings.clockwiseDistance(from: entry.endTimeStr, to: now) ?? 0
 
     let progress: Int
     let mode: Mode
-    if currentMins > endMins {
-      progress = Int(
-        (Double(currentMins - endMins) / Double(24 * 60 - (endMins - startMins))) * 100)
-      mode = .night
-    } else {
-      progress = Int((Double(currentMins - startMins) / Double(endMins - startMins)) * 100)
-      mode = .day
+
+    if startToEndMins == 0 {
+      return (0, .day)
     }
 
+    if startToNowMins <= startToEndMins {
+      // We're within the start-to-end period, i.e. the day
+      progress = Int((Double(startToNowMins) / Double(startToEndMins)) * 100)
+      mode = .day
+    } else {
+      // We're within the end-to-next-start period, i.e. the night
+      let endToNextStartMins = (24 * 60) - startToEndMins
+      progress = Int((Double(endToNowMins) / Double(endToNextStartMins)) * 100)
+      mode = .night
+    }
     return (progress, mode)
   }
 
   var body: some View {
     let (progress, mode) = self.calculateProgressAndMode(now: entry.date)
-    let remaining = 100 - progress
 
     VStack {
       HStack {
