@@ -65,6 +65,8 @@ struct SimpleEntry: TimelineEntry {
 }
 
 struct WidgetEntryView: View {
+  @Environment(\.widgetFamily) var widgetFamily
+
   var entry: Provider.Entry
 
   func calculateProgressAndMode(now: Date) -> (
@@ -99,18 +101,34 @@ struct WidgetEntryView: View {
   var body: some View {
     let (progress, mode) = self.calculateProgressAndMode(now: entry.date)
 
-    VStack {
-      HStack {
-        Image(systemName: mode == .day ? "sun.min" : "moon").font(.caption2)
-        Text(entry.date, style: .time).font(.system(.caption2, design: .rounded).bold())
+    switch widgetFamily {
+    case .accessoryCircular:
+      Gauge(value: Double(progress) / 100.0) {
+        VStack {
+          Image(systemName: mode == .day ? "sun.min" : "moon").font(.caption2)
+          Text("\(progress)%")
+        }
 
-      }.padding(.leading).padding(.top).frame(maxWidth: .infinity, alignment: .leading)
-      Spacer()
-      Text("\(progress)%").font(.system(.largeTitle, design: .rounded)).fontWeight(.bold)
-      Text("through the \(mode.name)")
-      Spacer()
-      Text("\(100 - progress)% remaining").font(.system(.caption, design: .rounded))
-        .padding(.top, 8).padding(.bottom)
+      }
+      .gaugeStyle(.accessoryCircularCapacity)
+
+    case .systemSmall:
+      VStack {
+        HStack {
+          Image(systemName: mode == .day ? "sun.min" : "moon").font(.caption2)
+          Text(entry.date, style: .time).font(.system(.caption2, design: .rounded).bold())
+
+        }.padding(.leading).padding(.top).frame(maxWidth: .infinity, alignment: .leading)
+        Spacer()
+        Text("\(progress)%").font(.system(.largeTitle, design: .rounded)).fontWeight(.bold)
+        Text("through the \(mode.name)")
+        Spacer()
+        Text("\(100 - progress)% remaining").font(.system(.caption, design: .rounded))
+          .padding(.top, 8).padding(.bottom)
+      }
+
+    default:
+      Text("Not yet implemented")
     }
 
   }
@@ -128,7 +146,7 @@ struct ContinuumWidget: Widget {
     }
     .configurationDisplayName("Continuum Clock")
     .description("See how much time you have at a glance.")
-    .supportedFamilies([.systemSmall])
+    .supportedFamilies([.systemSmall, .accessoryCircular])
   }
 }
 
@@ -141,6 +159,6 @@ struct Widget_Previews: PreviewProvider {
         endTimeStr: "23:30"
       )
     )
-    .previewContext(WidgetPreviewContext(family: .systemSmall))
+    .previewContext(WidgetPreviewContext(family: .accessoryCircular))
   }
 }
