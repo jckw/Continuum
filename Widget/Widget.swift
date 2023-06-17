@@ -68,7 +68,7 @@ struct Provider: TimelineProvider {
 
     // TODO: Consider only rendering % increases
     // Watch out here: increasing the number of entries rendered can cause the widget to exceed 30MB memory and crash it
-    for minuteOffset in 0..<4 * 60 {
+    for minuteOffset in 0..<3 * 60 {
       let entryDate = Calendar.current.date(
         byAdding: .minute, value: minuteOffset, to: currentDate)!.zeroSeconds!
       let (progress, mode) = Provider.calculateProgressAndMode(
@@ -122,7 +122,6 @@ struct WidgetEntryView: View {
         HStack {
           Image(systemName: entry.mode == .day ? "sun.min" : "moon").font(.caption2)
           Text(entry.date, style: .time).font(.system(.caption2, design: .rounded).bold())
-
         }.padding(.leading).padding(.top).frame(maxWidth: .infinity, alignment: .leading)
         Spacer()
         Text("\(entry.progress)%").font(.system(.largeTitle, design: .rounded)).fontWeight(.bold)
