@@ -29,9 +29,10 @@ struct DateStrings {
     } else if let defaultDate = formatter.date(from: defaultString) {
       return defaultDate
     } else {
-      fatalError(
+      assertionFailure(
         "Both the provided string '\(String(describing: string))' and the default string '\(defaultString)' do not convert to a valid date."
       )
+      return Date()
     }
   }
 
