@@ -12,7 +12,9 @@ struct Provider: TimelineProvider {
   let sharedUserDefaults = UserDefaults(suiteName: "group.G2Q4VASTYV.xyz.jackw.continuum")!
 
   func placeholder(in context: Context) -> SimpleEntry {
-    SimpleEntry(date: Date(), startTimeStr: "09:00", endTimeStr: "23:00")
+    let (progress, mode) = Provider.calculateProgressAndMode(
+      at: Date(), startTimeStr: "09:00", endTimeStr: "23:00")
+    return SimpleEntry(date: Date(), progress: progress, mode: mode)
   }
 
   func getStartEndTimeStr() -> (startTimeStr: String, endTimeStr: String) {
@@ -22,22 +24,56 @@ struct Provider: TimelineProvider {
     return (startTimeStr, endTimeStr)
   }
 
+  static func calculateProgressAndMode(at now: Date, startTimeStr: String, endTimeStr: String) -> (
+    progress: Int, mode: Mode
+  ) {
+
+    let startToEndMins =
+      DateStrings.clockwiseDistance(from: startTimeStr, to: endTimeStr) ?? 0
+    let startToNowMins =
+      DateStrings.clockwiseDistance(from: startTimeStr, to: now) ?? 0
+    let endToNowMins = DateStrings.clockwiseDistance(from: endTimeStr, to: now) ?? 0
+
+    let progress: Int
+    let mode: Mode
+
+    if startToEndMins == 0 {
+      return (0, .day)
+    }
+
+    if startToNowMins <= startToEndMins {
+      // We're within the start-to-end period, i.e. the day
+      progress = Int((Double(startToNowMins) / Double(startToEndMins)) * 100)
+      mode = .day
+    } else {
+      // We're within the end-to-next-start period, i.e. the night
+      let endToNextStartMins = (24 * 60) - startToEndMins
+      progress = Int((Double(endToNowMins) / Double(endToNextStartMins)) * 100)
+      mode = .night
+    }
+    return (progress, mode)
+  }
+
   func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
     let (startTimeStr, endTimeStr) = getStartEndTimeStr()
-    completion(SimpleEntry(date: Date(), startTimeStr: startTimeStr, endTimeStr: endTimeStr))
+    let (progress, mode) = Provider.calculateProgressAndMode(
+      at: Date(), startTimeStr: startTimeStr, endTimeStr: endTimeStr)
+    completion(SimpleEntry(date: Date(), progress: progress, mode: mode))
   }
 
   func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
     var entries: [SimpleEntry] = []
-    let (startTimeStr, endTimeStr) = getStartEndTimeStr()
     let currentDate = Date()
+    let (startTimeStr, endTimeStr) = getStartEndTimeStr()
 
     // TODO: Consider only rendering % increases
     // Watch out here: increasing the number of entries rendered can cause the widget to exceed 30MB memory and crash it
     for minuteOffset in 0..<4 * 60 {
       let entryDate = Calendar.current.date(
         byAdding: .minute, value: minuteOffset, to: currentDate)!.zeroSeconds!
-      let entry = SimpleEntry(date: entryDate, startTimeStr: startTimeStr, endTimeStr: endTimeStr)
+      let (progress, mode) = Provider.calculateProgressAndMode(
+        at: Date(), startTimeStr: startTimeStr, endTimeStr: endTimeStr)
+      let entry = SimpleEntry(date: entryDate, progress: progress, mode: mode)
       entries.append(entry)
     }
 
@@ -60,8 +96,8 @@ enum Mode {
 
 struct SimpleEntry: TimelineEntry {
   let date: Date
-  let startTimeStr: String
-  let endTimeStr: String
+  let progress: Int
+  let mode: Mode
 }
 
 struct WidgetEntryView: View {
@@ -69,44 +105,13 @@ struct WidgetEntryView: View {
 
   var entry: Provider.Entry
 
-  func calculateProgressAndMode(now: Date) -> (
-    progress: Int, mode: Mode
-  ) {
-    let startToEndMins =
-      DateStrings.clockwiseDistance(from: entry.startTimeStr, to: entry.endTimeStr) ?? 0
-    let startToNowMins =
-      DateStrings.clockwiseDistance(from: entry.startTimeStr, to: now) ?? 0
-    let endToNowMins = DateStrings.clockwiseDistance(from: entry.endTimeStr, to: now) ?? 0
-
-    let progress: Int
-    let mode: Mode
-
-    if startToEndMins == 0 {
-      return (0, .day)
-    }
-
-    if startToNowMins <= startToEndMins {
-      // We're within the start-to-end period, i.e. the day
-      progress = Int((Double(startToNowMins) / Double(startToEndMins)) * 100)
-      mode = .day
-    } else {
-      // We're within the end-to-next-start period, i.e. the night
-      let endToNextStartMins = (24 * 60) - startToEndMins
-      progress = Int((Double(endToNowMins) / Double(endToNextStartMins)) * 100)
-      mode = .night
-    }
-    return (progress, mode)
-  }
-
   var body: some View {
-    let (progress, mode) = self.calculateProgressAndMode(now: entry.date)
-
     switch widgetFamily {
     case .accessoryCircular:
-      Gauge(value: Double(progress) / 100.0) {
+      Gauge(value: Double(entry.progress) / 100.0) {
         VStack {
-          Image(systemName: mode == .day ? "sun.min" : "moon").font(.caption2)
-          Text("\(progress)%")
+          Image(systemName: entry.mode == .day ? "sun.min" : "moon").font(.caption2)
+          Text("\(entry.progress)%")
         }
 
       }
@@ -115,15 +120,15 @@ struct WidgetEntryView: View {
     case .systemSmall:
       VStack {
         HStack {
-          Image(systemName: mode == .day ? "sun.min" : "moon").font(.caption2)
+          Image(systemName: entry.mode == .day ? "sun.min" : "moon").font(.caption2)
           Text(entry.date, style: .time).font(.system(.caption2, design: .rounded).bold())
 
         }.padding(.leading).padding(.top).frame(maxWidth: .infinity, alignment: .leading)
         Spacer()
-        Text("\(progress)%").font(.system(.largeTitle, design: .rounded)).fontWeight(.bold)
-        Text("through the \(mode.name)")
+        Text("\(entry.progress)%").font(.system(.largeTitle, design: .rounded)).fontWeight(.bold)
+        Text("through the \(entry.mode.name)")
         Spacer()
-        Text("\(100 - progress)% remaining").font(.system(.caption, design: .rounded))
+        Text("\(100 - entry.progress)% remaining").font(.system(.caption, design: .rounded))
           .padding(.top, 8).padding(.bottom)
       }
 
@@ -152,13 +157,12 @@ struct ContinuumWidget: Widget {
 
 struct Widget_Previews: PreviewProvider {
   static var previews: some View {
+    let (progress, mode) = Provider.calculateProgressAndMode(
+      at: Date(), startTimeStr: "09:00", endTimeStr: "23:00")
+
     WidgetEntryView(
-      entry: SimpleEntry(
-        date: Date(),
-        startTimeStr: "09:00",
-        endTimeStr: "23:30"
-      )
+      entry: SimpleEntry(date: Date(), progress: progress, mode: mode)
     )
-    .previewContext(WidgetPreviewContext(family: .accessoryCircular))
+    .previewContext(WidgetPreviewContext(family: .systemSmall))
   }
 }
