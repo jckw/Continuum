@@ -72,7 +72,7 @@ struct Provider: TimelineProvider {
       let entryDate = Calendar.current.date(
         byAdding: .minute, value: minuteOffset, to: currentDate)!.zeroSeconds!
       let (progress, mode) = Provider.calculateProgressAndMode(
-        at: Date(), startTimeStr: startTimeStr, endTimeStr: endTimeStr)
+        at: entryDate, startTimeStr: startTimeStr, endTimeStr: endTimeStr)
       let entry = SimpleEntry(date: entryDate, progress: progress, mode: mode)
       entries.append(entry)
     }
