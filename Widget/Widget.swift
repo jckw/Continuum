@@ -34,7 +34,7 @@ struct Provider: TimelineProvider {
 
     // TODO: Consider only rendering % increases
     // Watch out here: increasing the number of entries rendered can cause the widget to exceed 30MB memory and crash it
-    for minuteOffset in 0..<6 * 60 {
+    for minuteOffset in 0..<4 * 60 {
       let entryDate = Calendar.current.date(
         byAdding: .minute, value: minuteOffset, to: currentDate)!.zeroSeconds!
       let entry = SimpleEntry(date: entryDate, startTimeStr: startTimeStr, endTimeStr: endTimeStr)
