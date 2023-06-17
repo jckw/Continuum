@@ -8,16 +8,31 @@
 import Foundation
 
 struct DateStrings {
-  static func string(from date: Date) -> String {
+  static let formatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateFormat = "HH:mm"
+    return formatter
+  }()
+
+  static func string(from date: Date) -> String {
     return formatter.string(from: date)
   }
 
   static func date(from string: String) -> Date? {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "HH:mm"
     return formatter.date(from: string)
+  }
+
+  static func date(from string: String?, default defaultString: String) -> Date {
+    let dateString = string ?? defaultString
+    if let date = formatter.date(from: dateString) {
+      return date
+    } else if let defaultDate = formatter.date(from: defaultString) {
+      return defaultDate
+    } else {
+      fatalError(
+        "Both the provided string '\(String(describing: string))' and the default string '\(defaultString)' do not convert to a valid date."
+      )
+    }
   }
 
   static func clockwiseDistance(from datedDate1: Date, to datedDate2: Date) -> Int? {

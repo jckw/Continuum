@@ -15,11 +15,11 @@ struct ContentView: View {
   @State private var endTime: Date
 
   init() {
-    let startTimeStr = sharedUserDefaults.string(forKey: "startTimeStr") ?? "09:00"
-    let endTimeStr = sharedUserDefaults.string(forKey: "endTimeStr") ?? "23:00"
+    let startTimeStr = sharedUserDefaults.string(forKey: "startTimeStr")
+    let endTimeStr = sharedUserDefaults.string(forKey: "endTimeStr")
 
-    _startTime = State(initialValue: DateStrings.date(from: startTimeStr)!)
-    _endTime = State(initialValue: DateStrings.date(from: endTimeStr)!)
+    _startTime = State(initialValue: DateStrings.date(from: startTimeStr, default: "09:00"))
+    _endTime = State(initialValue: DateStrings.date(from: endTimeStr, default: "23:00"))
   }
 
   var body: some View {
