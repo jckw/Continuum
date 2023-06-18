@@ -8,6 +8,25 @@
 import SwiftUI
 import WidgetKit
 
+func findLowestRatio(a: Int, b: Int) -> (Int, Int) {
+  var numerator = a
+  var denominator = b
+
+  // Find the greatest common divisor (GCD) using Euclidean algorithm
+  while denominator != 0 {
+    let remainder = numerator % denominator
+    numerator = denominator
+    denominator = remainder
+  }
+
+  // Divide both numerator and denominator by the GCD
+  let gcd = numerator
+  let x = a / gcd
+  let y = b / gcd
+
+  return (x, y)
+}
+
 struct ContentView: View {
   let sharedUserDefaults = UserDefaults(suiteName: "group.G2Q4VASTYV.xyz.jackw.continuum")!
 
@@ -26,6 +45,10 @@ struct ContentView: View {
   }
 
   var body: some View {
+    let wakingMinutes = DateStrings.clockwiseDistance(from: startTime, to: endTime)!
+    let sleepingMinutes = 24 * 60 - wakingMinutes
+    let (wR, sR) = findLowestRatio(a: wakingMinutes, b: sleepingMinutes)
+
     NavigationView {
       List {
         Section {
@@ -48,7 +71,15 @@ struct ContentView: View {
           HStack {
             Text("Waking time")
             Spacer()
-            Text("\(DateStrings.clockwiseDistance(from: startTime, to: endTime)!) minutes")
+            Text("\(wakingMinutes) minutes")
+          }
+          HStack {
+            Text("Sleep-to-wake ratio")
+            Spacer()
+            VStack(alignment: .trailing) {
+              Text("\(String(format: "%.2f", Double(sleepingMinutes)/Double(wakingMinutes)))")
+              Text("\(sR):\(wR)").font(.caption).foregroundColor(.gray)
+            }
           }
         } header: {
           Text("STATS")
@@ -92,7 +123,7 @@ struct ContentView: View {
           }.fontWeight(.medium)
             .sheet(isPresented: $showingLockScreenGuide) {
               VStack(alignment: .leading) {
-                Text("Adding Continuum to your Home Screen").font(.title).fontWeight(.bold).padding(
+                Text("Adding Continuum to your Lock Screen").font(.title).fontWeight(.bold).padding(
                   .bottom, 10)
                 VStack(alignment: .leading) {
                   HStack(alignment: .top) {
