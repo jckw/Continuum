@@ -83,12 +83,12 @@ struct ContentView: View {
                     Text("Press \"Add Widget\", place it on your Home Screen, and press \"Done\".")
                   }.padding(.bottom, 4)
                 }
-              }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading).padding(40)
-                .presentationDetents([.medium])
+              }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading).padding(30)
+                .presentationDetents([.height(500)])
             }
 
           Button("Add to Lock Screen") {
-            showingHomeScreenGuide.toggle()
+            showingLockScreenGuide.toggle()
           }.fontWeight(.medium)
             .sheet(isPresented: $showingLockScreenGuide) {
               VStack(alignment: .leading) {
@@ -114,8 +114,8 @@ struct ContentView: View {
                     Text("Find the Continuum widget here and tap it.")
                   }.padding(.bottom, 4)
                 }
-              }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading).padding(40)
-                .presentationDetents([.medium])
+              }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading).padding(30)
+                .presentationDetents([.height(500)])
             }
 
         } header: {
