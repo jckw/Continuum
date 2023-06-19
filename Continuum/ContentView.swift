@@ -8,25 +8,6 @@
 import SwiftUI
 import WidgetKit
 
-func findLowestRatio(a: Int, b: Int) -> (Int, Int) {
-  var numerator = a
-  var denominator = b
-
-  // Find the greatest common divisor (GCD) using Euclidean algorithm
-  while denominator != 0 {
-    let remainder = numerator % denominator
-    numerator = denominator
-    denominator = remainder
-  }
-
-  // Divide both numerator and denominator by the GCD
-  let gcd = numerator
-  let x = a / gcd
-  let y = b / gcd
-
-  return (x, y)
-}
-
 struct ContentView: View {
   let sharedUserDefaults = UserDefaults(suiteName: "group.G2Q4VASTYV.xyz.jackw.continuum")!
 
@@ -47,7 +28,7 @@ struct ContentView: View {
   var body: some View {
     let wakingMinutes = DateStrings.clockwiseDistance(from: startTime, to: endTime)!
     let sleepingMinutes = 24 * 60 - wakingMinutes
-    let (wR, sR) = findLowestRatio(a: wakingMinutes, b: sleepingMinutes)
+    let wakeToSleepRatio = Double(wakingMinutes) / Double(sleepingMinutes)
 
     NavigationView {
       List {
@@ -78,7 +59,8 @@ struct ContentView: View {
             Spacer()
             VStack(alignment: .trailing) {
               Text("\(String(format: "%.2f", Double(sleepingMinutes)/Double(wakingMinutes)))")
-              Text("\(sR):\(wR)").font(.caption).foregroundColor(.gray)
+              Text("1:\(String(format: "%.2f", wakeToSleepRatio))").font(.caption).foregroundColor(
+                .gray)
             }
           }
         } header: {
