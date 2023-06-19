@@ -32,6 +32,11 @@ struct ContentView: View {
 
   @State private var startTime: Date
   @State private var endTime: Date
+  @State private var workDayStartTime: Date
+  @State private var workDayEndTime: Date
+
+  @AppStorage("preWorkDayNotifIsOn") var preWorkDayNotifIsOn: Bool = true
+  @AppStorage("workDayEndNotifIsOn") var workDayEndNotifIsOn: Bool = true
 
   @State private var showingHomeScreenGuide = false
   @State private var showingLockScreenGuide = false
@@ -39,15 +44,22 @@ struct ContentView: View {
   init() {
     let startTimeStr = sharedUserDefaults.string(forKey: "startTimeStr")
     let endTimeStr = sharedUserDefaults.string(forKey: "endTimeStr")
+    let workDayEndTimeStr = sharedUserDefaults.string(forKey: "workDayEndTimeStr")
+    let workDayStartTimeStr = sharedUserDefaults.string(forKey: "workDayStartTimeStr")
 
     _startTime = State(initialValue: DateStrings.date(from: startTimeStr, default: "09:00"))
     _endTime = State(initialValue: DateStrings.date(from: endTimeStr, default: "23:00"))
+    _workDayEndTime = State(
+      initialValue: DateStrings.date(from: workDayEndTimeStr, default: "17:30"))
+    _workDayStartTime = State(
+      initialValue: DateStrings.date(from: workDayStartTimeStr, default: "09:00"))
   }
 
   var body: some View {
     let wakingMinutes = DateStrings.clockwiseDistance(from: startTime, to: endTime)!
     let sleepingMinutes = 24 * 60 - wakingMinutes
-    let (wR, sR) = findLowestRatio(a: wakingMinutes, b: sleepingMinutes)
+    let workingMinutes = DateStrings.clockwiseDistance(from: workDayStartTime, to: workDayEndTime)!
+    let (stwRW, stwRS) = findLowestRatio(a: wakingMinutes, b: sleepingMinutes)
 
     NavigationView {
       List {
@@ -68,17 +80,76 @@ struct ContentView: View {
           Text("CONFIG")
         }
         Section {
+          DatePicker(
+            "Work day start", selection: $workDayStartTime, displayedComponents: .hourAndMinute
+          )
+          .datePickerStyle(.compact)
+          .onChange(of: workDayStartTime) { newValue in
+            sharedUserDefaults.set(
+              DateStrings.string(from: workDayStartTime), forKey: "workDayStartTimeStr")
+            // WidgetCenter.shared.reloadAllTimelines()
+          }
+          DatePicker(
+            "Work day end", selection: $workDayEndTime, displayedComponents: .hourAndMinute
+          )
+          .datePickerStyle(.compact)
+          .onChange(of: workDayEndTime) { newValue in
+            sharedUserDefaults.set(
+              DateStrings.string(from: workDayEndTime), forKey: "workDayEndTimeStr")
+            // WidgetCenter.shared.reloadAllTimelines()
+          }
+          HStack {
+            VStack(alignment: .leading) {
+              Text("Start of day notification").padding(.bottom, 1)
+              Text(
+                "When enabled, Continuum will send you a notification at the start of your waking day to remind you how much time you have before work."
+              ).font(.caption).foregroundColor(.gray)
+            }
+            Spacer()
+            Toggle("", isOn: $workDayEndNotifIsOn).labelsHidden()
+          }
+          HStack {
+            VStack(alignment: .leading) {
+              Text("End of work day notification").padding(.bottom, 1)
+              Text(
+                "When enabled, Continuum will send you a notification at the end of your work day to remind you how much time you have left."
+              ).font(.caption).foregroundColor(.gray)
+            }
+            Spacer()
+            Toggle("", isOn: $workDayEndNotifIsOn).labelsHidden()
+          }
+        } header: {
+          Text("REMINDERS")
+        }
+        Section {
           HStack {
             Text("Waking time")
             Spacer()
             Text("\(wakingMinutes) minutes")
           }
           HStack {
+            Text("Sleeping time")
+            Spacer()
+            Text("\(sleepingMinutes) minutes")
+          }
+          HStack {
+            Text("Working time")
+            Spacer()
+            Text("\(workingMinutes) minutes")
+          }
+          HStack {
             Text("Sleep-to-wake ratio")
             Spacer()
             VStack(alignment: .trailing) {
-              Text("\(String(format: "%.2f", Double(sleepingMinutes)/Double(wakingMinutes)))")
-              Text("\(sR):\(wR)").font(.caption).foregroundColor(.gray)
+              Text("\(String(format: "%.2f", Double(stwRS)/Double(stwRW)))")
+              Text("\(stwRS):\(stwRW)").font(.caption).foregroundColor(.gray)
+            }
+          }
+          HStack {
+            Text("Waking time working")
+            Spacer()
+            VStack(alignment: .trailing) {
+              Text("\(String(format: "%.1f", Double(workingMinutes)/Double(wakingMinutes)*100))%")
             }
           }
         } header: {
