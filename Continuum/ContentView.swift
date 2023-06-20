@@ -30,7 +30,7 @@ struct ContentView: View {
     let sleepingMinutes = 24 * 60 - wakingMinutes
     let wakeToSleepRatio = Double(wakingMinutes) / Double(sleepingMinutes)
 
-    NavigationView {
+    NavigationStack {
       List {
         Section {
           DatePicker("Start of day", selection: $startTime, displayedComponents: .hourAndMinute)
@@ -144,5 +144,11 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
     ContentView()
+      .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
+      .previewDisplayName("iPhone 14")
+
+    ContentView()
+      .previewDevice(PreviewDevice(rawValue: "iPad Air (5th generation)"))
+      .previewDisplayName("iPad Air")
   }
 }
