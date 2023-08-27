@@ -19,6 +19,11 @@
 		04DBD2892A3522C600FBD179 /* Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DBD2882A3522C600FBD179 /* Widget.swift */; };
 		04DBD28C2A3522C700FBD179 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04DBD28B2A3522C700FBD179 /* Assets.xcassets */; };
 		04DBD2922A3522C700FBD179 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 04DBD27D2A3522C600FBD179 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		04F427392A6F399F0075DA9C /* WatchContinuumApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F427382A6F399F0075DA9C /* WatchContinuumApp.swift */; };
+		04F4273B2A6F399F0075DA9C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F4273A2A6F399F0075DA9C /* ContentView.swift */; };
+		04F4273D2A6F39A00075DA9C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04F4273C2A6F39A00075DA9C /* Assets.xcassets */; };
+		04F427402A6F39A00075DA9C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04F4273F2A6F39A00075DA9C /* Preview Assets.xcassets */; };
+		04F427432A6F39A00075DA9C /* WatchContinuum Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 04F427362A6F399F0075DA9C /* WatchContinuum Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,6 +33,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 04DBD27C2A3522C600FBD179;
 			remoteInfo = WidgetExtension;
+		};
+		04F427412A6F39A00075DA9C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04DBD2572A3516AD00FBD179 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 04F427352A6F399F0075DA9C;
+			remoteInfo = "WatchContinuum Watch App";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -41,6 +53,17 @@
 				04DBD2922A3522C700FBD179 /* WidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04F427442A6F39A00075DA9C /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				04F427432A6F39A00075DA9C /* WatchContinuum Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -62,6 +85,11 @@
 		04DBD28D2A3522C700FBD179 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04DBD2972A3528CC00FBD179 /* WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetExtension.entitlements; sourceTree = "<group>"; };
 		04E9F1A72A380F4700B52914 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		04F427362A6F399F0075DA9C /* WatchContinuum Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WatchContinuum Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		04F427382A6F399F0075DA9C /* WatchContinuumApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchContinuumApp.swift; sourceTree = "<group>"; };
+		04F4273A2A6F399F0075DA9C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		04F4273C2A6F39A00075DA9C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		04F4273F2A6F39A00075DA9C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +109,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		04F427332A6F399F0075DA9C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -90,6 +125,7 @@
 				049EC2EE2A371B4F0063B704 /* DateStrings.swift */,
 				04DBD2612A3516AD00FBD179 /* Continuum */,
 				04DBD2832A3522C600FBD179 /* Widget */,
+				04F427372A6F399F0075DA9C /* WatchContinuum Watch App */,
 				04DBD27E2A3522C600FBD179 /* Frameworks */,
 				04DBD2602A3516AD00FBD179 /* Products */,
 			);
@@ -100,6 +136,7 @@
 			children = (
 				04DBD25F2A3516AD00FBD179 /* Continuum.app */,
 				04DBD27D2A3522C600FBD179 /* WidgetExtension.appex */,
+				04F427362A6F399F0075DA9C /* WatchContinuum Watch App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -146,6 +183,25 @@
 			path = Widget;
 			sourceTree = "<group>";
 		};
+		04F427372A6F399F0075DA9C /* WatchContinuum Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				04F427382A6F399F0075DA9C /* WatchContinuumApp.swift */,
+				04F4273A2A6F399F0075DA9C /* ContentView.swift */,
+				04F4273C2A6F39A00075DA9C /* Assets.xcassets */,
+				04F4273E2A6F39A00075DA9C /* Preview Content */,
+			);
+			path = "WatchContinuum Watch App";
+			sourceTree = "<group>";
+		};
+		04F4273E2A6F39A00075DA9C /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				04F4273F2A6F39A00075DA9C /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -157,11 +213,13 @@
 				04DBD25C2A3516AD00FBD179 /* Frameworks */,
 				04DBD25D2A3516AD00FBD179 /* Resources */,
 				04DBD2962A3522C700FBD179 /* Embed Foundation Extensions */,
+				04F427442A6F39A00075DA9C /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				04DBD2912A3522C700FBD179 /* PBXTargetDependency */,
+				04F427422A6F39A00075DA9C /* PBXTargetDependency */,
 			);
 			name = Continuum;
 			productName = Continuum;
@@ -185,6 +243,23 @@
 			productReference = 04DBD27D2A3522C600FBD179 /* WidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		04F427352A6F399F0075DA9C /* WatchContinuum Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 04F427472A6F39A00075DA9C /* Build configuration list for PBXNativeTarget "WatchContinuum Watch App" */;
+			buildPhases = (
+				04F427322A6F399F0075DA9C /* Sources */,
+				04F427332A6F399F0075DA9C /* Frameworks */,
+				04F427342A6F399F0075DA9C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "WatchContinuum Watch App";
+			productName = "WatchContinuum Watch App";
+			productReference = 04F427362A6F399F0075DA9C /* WatchContinuum Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -199,6 +274,9 @@
 						CreatedOnToolsVersion = 14.3.1;
 					};
 					04DBD27C2A3522C600FBD179 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+					04F427352A6F399F0075DA9C = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
 				};
@@ -218,6 +296,7 @@
 			targets = (
 				04DBD25E2A3516AD00FBD179 /* Continuum */,
 				04DBD27C2A3522C600FBD179 /* WidgetExtension */,
+				04F427352A6F399F0075DA9C /* WatchContinuum Watch App */,
 			);
 		};
 /* End PBXProject section */
@@ -237,6 +316,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				04DBD28C2A3522C700FBD179 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04F427342A6F399F0075DA9C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04F427402A6F39A00075DA9C /* Preview Assets.xcassets in Resources */,
+				04F4273D2A6F39A00075DA9C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +351,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		04F427322A6F399F0075DA9C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04F4273B2A6F399F0075DA9C /* ContentView.swift in Sources */,
+				04F427392A6F399F0075DA9C /* WatchContinuumApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -270,6 +367,11 @@
 			isa = PBXTargetDependency;
 			target = 04DBD27C2A3522C600FBD179 /* WidgetExtension */;
 			targetProxy = 04DBD2902A3522C700FBD179 /* PBXContainerItemProxy */;
+		};
+		04F427422A6F39A00075DA9C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 04F427352A6F399F0075DA9C /* WatchContinuum Watch App */;
+			targetProxy = 04F427412A6F39A00075DA9C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -515,6 +617,68 @@
 			};
 			name = Release;
 		};
+		04F427452A6F39A00075DA9C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"WatchContinuum Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = G2Q4VASTYV;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = WatchContinuum;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = xyz.jckw.continuum;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.jckw.continuum.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 9.4;
+			};
+			name = Debug;
+		};
+		04F427462A6F39A00075DA9C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"WatchContinuum Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = G2Q4VASTYV;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = WatchContinuum;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = xyz.jckw.continuum;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.jckw.continuum.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 9.4;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -541,6 +705,15 @@
 			buildConfigurations = (
 				04DBD2942A3522C700FBD179 /* Debug */,
 				04DBD2952A3522C700FBD179 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		04F427472A6F39A00075DA9C /* Build configuration list for PBXNativeTarget "WatchContinuum Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04F427452A6F39A00075DA9C /* Debug */,
+				04F427462A6F39A00075DA9C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
