@@ -66,11 +66,15 @@ struct Provider: TimelineProvider {
     let currentDate = Date()
     let (startTimeStr, endTimeStr) = getStartEndTimeStr()
 
-    // TODO: Consider only rendering % increases
-    // Watch out here: increasing the number of entries rendered can cause the widget to exceed 30MB memory and crash it
-    for minuteOffset in 0..<3 * 60 {
+    let startToEndMins = DateStrings.clockwiseDistance(from: startTimeStr, to: endTimeStr) ?? 0
+    let stepSizeInMinutes = Double(startToEndMins) / 100.0
+
+    // Watch out here: increasing the number of entries rendered can cause the widget to
+    // exceed 30MB memory and crash it
+    for percentage in 0..<150 {
+      let currentOffset = Double(percentage) * stepSizeInMinutes
       let entryDate = Calendar.current.date(
-        byAdding: .minute, value: minuteOffset, to: currentDate)!.zeroSeconds!
+        byAdding: .minute, value: Int(currentOffset), to: currentDate)!.zeroSeconds!
       let (progress, mode) = Provider.calculateProgressAndMode(
         at: entryDate, startTimeStr: startTimeStr, endTimeStr: endTimeStr)
       let entry = SimpleEntry(date: entryDate, progress: progress, mode: mode)
@@ -121,7 +125,7 @@ struct WidgetEntryView: View {
       VStack {
         HStack {
           Image(systemName: entry.mode == .day ? "sun.min" : "moon").font(.caption2)
-          Text(entry.date, style: .time).font(.system(.caption2, design: .rounded).bold())
+          Text(Date(), style: .time).font(.system(.caption2, design: .rounded).bold())
         }.padding(.leading).padding(.top).frame(maxWidth: .infinity, alignment: .leading)
         Spacer()
         Text("\(entry.progress)%").font(.system(.largeTitle, design: .rounded)).fontWeight(.bold)
