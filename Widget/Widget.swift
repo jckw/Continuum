@@ -14,7 +14,11 @@ struct Provider: TimelineProvider {
   func placeholder(in context: Context) -> SimpleEntry {
     let (progress, mode) = Provider.calculateProgressAndMode(
       at: Date(), startTimeStr: "09:00", endTimeStr: "23:00")
-    return SimpleEntry(date: Date(), progress: progress, mode: mode)
+    return SimpleEntry(
+      date: Date(),
+      periodEndDate: DateStrings.relativeDate(
+        time: mode == .day ? "23:00" : "09:00", direction: .next),
+      progress: progress, mode: mode)
   }
 
   func getStartEndTimeStr() -> (startTimeStr: String, endTimeStr: String) {
@@ -58,7 +62,16 @@ struct Provider: TimelineProvider {
     let (startTimeStr, endTimeStr) = getStartEndTimeStr()
     let (progress, mode) = Provider.calculateProgressAndMode(
       at: Date(), startTimeStr: startTimeStr, endTimeStr: endTimeStr)
-    completion(SimpleEntry(date: Date(), progress: progress, mode: mode))
+    completion(
+      SimpleEntry(
+        date: Date(),
+        periodEndDate: DateStrings.relativeDate(
+          time: endTimeStr,
+          direction: .next,
+          default: mode == .day ? "23:00" : "09:00"
+        ),
+        progress: progress,
+        mode: mode))
   }
 
   func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
@@ -77,7 +90,16 @@ struct Provider: TimelineProvider {
         byAdding: .minute, value: Int(currentOffset), to: currentDate)!.zeroSeconds!
       let (progress, mode) = Provider.calculateProgressAndMode(
         at: entryDate, startTimeStr: startTimeStr, endTimeStr: endTimeStr)
-      let entry = SimpleEntry(date: entryDate, progress: progress, mode: mode)
+      let entry = SimpleEntry(
+        date: entryDate,
+        periodEndDate: DateStrings.relativeDate(
+          time: endTimeStr,
+          direction: .next,
+          default: mode == .day ? "23:00" : "09:00"
+        ),
+        progress: progress,
+        mode: mode
+      )
       entries.append(entry)
     }
 
@@ -100,6 +122,7 @@ enum Mode {
 
 struct SimpleEntry: TimelineEntry {
   let date: Date
+  let periodEndDate: Date
   let progress: Int
   let mode: Mode
 }
@@ -125,7 +148,8 @@ struct WidgetEntryView: View {
       VStack {
         HStack {
           Image(systemName: entry.mode == .day ? "sun.min" : "moon").font(.caption2)
-          Text(Date(), style: .time).font(.system(.caption2, design: .rounded).bold())
+          Text(entry.periodEndDate, style: .timer).font(
+            .system(.caption2, design: .rounded).bold())
         }.padding(.leading).padding(.top).frame(maxWidth: .infinity, alignment: .leading)
         Spacer()
         Text("\(entry.progress)%").font(.system(.largeTitle, design: .rounded)).fontWeight(.bold)
@@ -164,7 +188,11 @@ struct Widget_Previews: PreviewProvider {
       at: Date(), startTimeStr: "09:00", endTimeStr: "23:00")
 
     WidgetEntryView(
-      entry: SimpleEntry(date: Date(), progress: progress, mode: mode)
+      entry: SimpleEntry(
+        date: Date(),
+        periodEndDate: DateStrings.relativeDate(
+          time: mode == .day ? "23:00" : "09:00", direction: .next),
+        progress: progress, mode: mode)
     )
     .previewContext(WidgetPreviewContext(family: .systemSmall))
   }

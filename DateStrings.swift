@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum TimeDirection {
+  case next
+  case previous
+}
+
 struct DateStrings {
   static let formatter: DateFormatter = {
     let formatter = DateFormatter()
@@ -16,6 +21,64 @@ struct DateStrings {
 
   static func string(from date: Date) -> String {
     return formatter.string(from: date)
+  }
+
+  static func relativeDate(
+    time string: String, direction: TimeDirection, default defaultStringOptional: String? = nil
+  ) -> Date {
+    let now = Date()
+
+    let nowComponents = Calendar.current.dateComponents([.hour, .minute], from: now)
+    let nowHour = nowComponents.hour!
+    let nowMinute = nowComponents.minute!
+
+    let defaultString = defaultStringOptional ?? string
+    let dayAgnosticDate = date(from: string, default: defaultString)
+    let dayAgnosticDateComponents = Calendar.current.dateComponents(
+      [.hour, .minute], from: dayAgnosticDate)
+
+    let hour = dayAgnosticDateComponents.hour!
+    let mins = dayAgnosticDateComponents.minute!
+
+    if direction == .next {
+      // Get the next date that the clock will read the string
+      let nextDate: Date
+
+      if hour > nowHour
+        || (hour == nowHour && mins > nowMinute)
+      {
+        // The time is after now, so we can just use today's date
+        nextDate = Calendar.current.date(
+          bySettingHour: hour, minute: mins, second: 0, of: now)!
+      } else {
+        // The time is before now, so we need to use tomorrow's date
+        nextDate = Calendar.current.date(
+          bySettingHour: hour, minute: mins, second: 0, of: now)!
+          .addingTimeInterval(24 * 60 * 60)
+      }
+
+      return nextDate
+    } else if direction == .previous {
+      // Get the previous date that the clock will read the string
+      let previousDate: Date
+
+      if hour < nowHour
+        || (hour == nowHour && mins < nowMinute)
+      {
+        // The time is before now, so we can just use today's date
+        previousDate = Calendar.current.date(
+          bySettingHour: hour, minute: mins, second: 0, of: now)!
+      } else {
+        // The time is after now, so we need to use yesterday's date
+        previousDate = Calendar.current.date(
+          bySettingHour: hour, minute: mins, second: 0, of: now)!
+          .addingTimeInterval(-24 * 60 * 60)
+      }
+
+      return previousDate
+    }
+
+    fatalError("Invalid time direction")
   }
 
   static func date(from string: String) -> Date? {
