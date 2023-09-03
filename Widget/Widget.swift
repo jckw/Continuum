@@ -200,12 +200,14 @@ struct ContinuumWidget: Widget {
 
 struct Widget_Previews: PreviewProvider {
   static var previews: some View {
+    let now = Date()
+    
     let (progress, mode) = Provider.calculateProgressAndMode(
-      at: Date(), startTimeStr: "09:00", endTimeStr: "23:00")
+      at: now, startTimeStr: "09:00", endTimeStr: "23:00")
 
     WidgetEntryView(
       entry: SimpleEntry(
-        date: Date(),
+        date: now,
         periodEndDate: DateStrings.relativeDate(
           time: mode == .day ? "23:00" : "09:00", direction: .next),
         progress: progress, mode: mode)
