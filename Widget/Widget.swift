@@ -148,15 +148,31 @@ struct WidgetEntryView: View {
       VStack {
         HStack {
           Image(systemName: entry.mode == .day ? "sun.min" : "moon").font(.caption2)
-          Text(entry.periodEndDate, style: .timer).font(
-            .system(.caption2, design: .rounded).bold())
+          Text("ends in ").font(
+            .system(.caption2, design: .rounded).bold()
+          ).zIndex(2)
+          Text(entry.periodEndDate, style: .offset).font(
+            .system(.caption2, design: .rounded).bold()
+          ).multilineTextAlignment(.leading)
+            .overlay(
+              GeometryReader { geometry in
+                Rectangle()
+                  .fill(Color.white)
+                  .frame(width: 8, height: geometry.size.height)
+                  .offset(x: 0, y: 0)
+              }
+            ).padding([.leading], -6 + -10)
+
         }.padding(.leading).padding(.top).frame(maxWidth: .infinity, alignment: .leading)
         Spacer()
-        Text("\(entry.progress)%").font(.system(.largeTitle, design: .rounded)).fontWeight(.bold)
-        Text("through the \(entry.mode.name)")
+        Text("\(100 - entry.progress)%").font(.system(.largeTitle, design: .rounded)).fontWeight(
+          .bold)
+        Text("remaining in \(entry.mode.name)")
         Spacer()
-        Text("\(100 - entry.progress)% remaining").font(.system(.caption, design: .rounded))
-          .padding(.top, 8).padding(.bottom)
+
+        Text("\(entry.progress)% complete").font(.system(.caption, design: .rounded))
+          .padding(.bottom)
+          .padding(.top, 8)
       }
 
     default:
