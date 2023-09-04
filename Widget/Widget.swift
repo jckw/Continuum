@@ -158,7 +158,7 @@ struct WidgetEntryView: View {
             .overlay(
               GeometryReader { geometry in
                 Rectangle()
-                  .fill(Color.white)
+                  .fill(.background)
                   .frame(width: 8, height: geometry.size.height)
                   .offset(x: 0, y: 0)
               }
