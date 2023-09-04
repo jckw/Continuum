@@ -95,7 +95,8 @@ struct Provider: TimelineProvider {
         periodEndDate: DateStrings.relativeDate(
           time: endTimeStr,
           direction: .next,
-          default: mode == .day ? "23:00" : "09:00"
+          default: mode == .day ? "23:00" : "09:00",
+          from: entryDate
         ),
         progress: progress,
         mode: mode
@@ -201,7 +202,7 @@ struct ContinuumWidget: Widget {
 struct Widget_Previews: PreviewProvider {
   static var previews: some View {
     let now = Date()
-    
+
     let (progress, mode) = Provider.calculateProgressAndMode(
       at: now, startTimeStr: "09:00", endTimeStr: "23:00")
 

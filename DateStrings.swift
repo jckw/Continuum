@@ -24,9 +24,10 @@ struct DateStrings {
   }
 
   static func relativeDate(
-    time string: String, direction: TimeDirection, default defaultStringOptional: String? = nil
+    time string: String, direction: TimeDirection, default defaultStringOptional: String? = nil,
+    from baseDate: Date? = nil
   ) -> Date {
-    let now = Date()
+    let now = baseDate ?? Date()
 
     let nowComponents = Calendar.current.dateComponents([.hour, .minute], from: now)
     let nowHour = nowComponents.hour!
