@@ -35,14 +35,14 @@ struct ContentView: View {
         Section {
           DatePicker("Start of day", selection: $startTime, displayedComponents: .hourAndMinute)
             .datePickerStyle(.compact)
-            .onChange(of: startTime) { newValue in
+            .onChange(of: startTime) { _, newValue in
               sharedUserDefaults.set(DateStrings.string(from: newValue), forKey: "startTimeStr")
               WidgetCenter.shared.reloadAllTimelines()
             }
           DatePicker("End of day", selection: $endTime, displayedComponents: .hourAndMinute)
             .datePickerStyle(.compact)
-            .onChange(of: endTime) { newValue in
-              sharedUserDefaults.set(DateStrings.string(from: endTime), forKey: "endTimeStr")
+            .onChange(of: endTime) { _, newValue in
+              sharedUserDefaults.set(DateStrings.string(from: newValue), forKey: "endTimeStr")
               WidgetCenter.shared.reloadAllTimelines()
             }
         } header: {

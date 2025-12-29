@@ -1,0 +1,24 @@
+# Deliverfile - App Store submission configuration
+
+# Skip binary upload when only updating metadata
+# skip_binary_upload(true)
+
+# Automatically submit for review after upload
+# submit_for_review(true)
+
+# Skip screenshots upload (manage manually in ASC if preferred)
+skip_screenshots(true)
+
+# Precheck settings
+precheck_include_in_app_purchases(false)
+
+# Submission information
+submission_information({
+  add_id_info_uses_idfa: false
+})
+
+# Price tier (0 = free)
+price_tier(0)
+
+# App rating configuration
+app_rating_config_path("./fastlane/rating_config.json")

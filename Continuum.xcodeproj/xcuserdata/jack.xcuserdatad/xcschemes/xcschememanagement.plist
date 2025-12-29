@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>ContinuumUITests.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>WidgetExtension.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -17,6 +22,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>046A6C1C2F0305A400B27D1E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>04DBD25E2A3516AD00FBD179</key>
 		<dict>
 			<key>primary</key>

@@ -47,13 +47,37 @@ Build for development
 
 Upload to TestFlight
 
+### ios metadata
+
+```sh
+[bundle exec] fastlane ios metadata
+```
+
+Upload metadata only (no build)
+
 ### ios release
 
 ```sh
 [bundle exec] fastlane ios release
 ```
 
-Upload to App Store
+Upload to App Store with metadata
+
+### ios screenshots
+
+```sh
+[bundle exec] fastlane ios screenshots
+```
+
+Capture App Store screenshots
+
+### ios submit
+
+```sh
+[bundle exec] fastlane ios submit
+```
+
+Submit for review (after release)
 
 ----
 

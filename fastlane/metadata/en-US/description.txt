@@ -1,0 +1,11 @@
+Continuum is a simple widget that shows how much of your waking day has passed.
+
+Set your wake-up and bedtime, and Continuum displays a progress bar showing where you are in your day. Add it to your Home Screen or Lock Screen for a quick glance at your daily progress.
+
+Features:
+- Customizable start and end times for your day
+- Home Screen widget
+- Lock Screen widget
+- Clean, minimal design
+
+Perfect for staying mindful of how you're spending your time.
