@@ -14,10 +14,11 @@ struct Provider: TimelineProvider {
   func placeholder(in context: Context) -> SimpleEntry {
     let (progress, mode) = Provider.calculateProgressAndMode(
       at: Date(), startTimeStr: "09:00", endTimeStr: "23:00")
+    let periodEndTime = mode == .day ? "23:00" : "09:00"
     return SimpleEntry(
       date: Date(),
       periodEndDate: DateStrings.relativeDate(
-        time: mode == .day ? "23:00" : "09:00", direction: .next),
+        time: periodEndTime, direction: .next),
       progress: progress, mode: mode)
   }
 
@@ -62,13 +63,14 @@ struct Provider: TimelineProvider {
     let (startTimeStr, endTimeStr) = getStartEndTimeStr()
     let (progress, mode) = Provider.calculateProgressAndMode(
       at: Date(), startTimeStr: startTimeStr, endTimeStr: endTimeStr)
+    let periodEndTime = mode == .day ? endTimeStr : startTimeStr
     completion(
       SimpleEntry(
         date: Date(),
         periodEndDate: DateStrings.relativeDate(
-          time: endTimeStr,
+          time: periodEndTime,
           direction: .next,
-          default: mode == .day ? "23:00" : "09:00"
+          default: periodEndTime
         ),
         progress: progress,
         mode: mode))
@@ -90,12 +92,13 @@ struct Provider: TimelineProvider {
         byAdding: .minute, value: Int(currentOffset), to: currentDate)!.zeroSeconds!
       let (progress, mode) = Provider.calculateProgressAndMode(
         at: entryDate, startTimeStr: startTimeStr, endTimeStr: endTimeStr)
+      let periodEndTime = mode == .day ? endTimeStr : startTimeStr
       let entry = SimpleEntry(
         date: entryDate,
         periodEndDate: DateStrings.relativeDate(
-          time: endTimeStr,
+          time: periodEndTime,
           direction: .next,
-          default: mode == .day ? "23:00" : "09:00",
+          default: periodEndTime,
           from: entryDate
         ),
         progress: progress,
@@ -136,44 +139,69 @@ struct WidgetEntryView: View {
   var body: some View {
     switch widgetFamily {
     case .accessoryCircular:
-      Gauge(value: Double(entry.progress) / 100.0) {
-        VStack {
-          Image(systemName: entry.mode == .day ? "sun.min" : "moon").font(.caption2)
-          Text("\(entry.progress)%")
+      if entry.mode == .day {
+        Gauge(value: Double(entry.progress) / 100.0) {
+          VStack {
+            Image(systemName: "sun.min").font(.caption2)
+            Text("\(100 - entry.progress)%")
+          }
         }
-
+        .gaugeStyle(.accessoryCircularCapacity)
+      } else {
+        VStack {
+          Image(systemName: "moon").font(.caption2)
+          Text(entry.periodEndDate, style: .timer)
+            .font(.caption2)
+            .multilineTextAlignment(.center)
+        }
       }
-      .gaugeStyle(.accessoryCircularCapacity)
 
     case .systemSmall:
-      VStack {
-        HStack {
-          Image(systemName: entry.mode == .day ? "sun.min" : "moon").font(.caption2)
-          Text("ends in ").font(
-            .system(.caption2, design: .rounded).bold()
-          ).zIndex(2)
-          Text(entry.periodEndDate, style: .offset).font(
-            .system(.caption2, design: .rounded).bold()
-          ).multilineTextAlignment(.leading)
-            .overlay(
-              GeometryReader { geometry in
-                Rectangle()
-                  .fill(.background)
-                  .frame(width: 8, height: geometry.size.height)
-                  .offset(x: 0, y: 0)
-              }
-            ).padding([.leading], -6 + -10)
+      if entry.mode == .day {
+        VStack {
+          HStack(spacing: 4) {
+            Image(systemName: "sun.min").font(.caption2)
+            Text("ends in").font(
+              .system(.caption2, design: .rounded).bold()
+            )
+            Text(entry.periodEndDate, style: .offset).font(
+              .system(.caption2, design: .rounded).bold()
+            ).lineLimit(1)
+          }
+          .padding(.leading)
+          .padding(.top)
+          .frame(maxWidth: .infinity, alignment: .leading)
+          
+          Spacer()
+          
+          Text("\(100 - entry.progress)%")
+            .font(.system(.largeTitle, design: .rounded))
+            .fontWeight(.bold)
+          
+          Text("remaining in day")
+            .font(.system(.callout, design: .rounded))
+          
+          Spacer()
 
-        }.padding(.leading).padding(.top).frame(maxWidth: .infinity, alignment: .leading)
-        Spacer()
-        Text("\(100 - entry.progress)%").font(.system(.largeTitle, design: .rounded)).fontWeight(
-          .bold)
-        Text("remaining in \(entry.mode.name)")
-        Spacer()
-
-        Text("\(entry.progress)% complete").font(.system(.caption, design: .rounded))
-          .padding(.bottom)
-          .padding(.top, 8)
+          Text("\(entry.progress)% complete")
+            .font(.system(.caption, design: .rounded))
+            .padding(.bottom)
+            .padding(.top, 8)
+        }
+      } else {
+        VStack {
+          Spacer()
+          Image(systemName: "moon")
+            .font(.title2)
+            .padding(.bottom, 4)
+          Text("Your day begins in")
+            .font(.system(.caption, design: .rounded))
+          Text(entry.periodEndDate, style: .timer)
+            .font(.system(.title2, design: .rounded))
+            .fontWeight(.medium)
+            .monospacedDigit()
+          Spacer()
+        }
       }
 
     default:
@@ -206,12 +234,13 @@ struct Widget_Previews: PreviewProvider {
 
     let (progress, mode) = Provider.calculateProgressAndMode(
       at: now, startTimeStr: "09:00", endTimeStr: "23:00")
+    let periodEndTime = mode == .day ? "23:00" : "09:00"
 
     WidgetEntryView(
       entry: SimpleEntry(
         date: now,
         periodEndDate: DateStrings.relativeDate(
-          time: mode == .day ? "23:00" : "09:00", direction: .next),
+          time: periodEndTime, direction: .next),
         progress: progress, mode: mode)
     )
     .previewContext(WidgetPreviewContext(family: .systemSmall))

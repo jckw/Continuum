@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		041C69B12F03391F00DD9F74 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041C69B02F03391F00DD9F74 /* NotificationManager.swift */; };
+		041C69B52F03399200DD9F74 /* JournalEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041C69B32F03399200DD9F74 /* JournalEntry.swift */; };
+		041C69B62F03399200DD9F74 /* JournalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041C69B42F03399200DD9F74 /* JournalView.swift */; };
+		041C69B72F03399200DD9F74 /* AppIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041C69B22F03399200DD9F74 /* AppIntents.swift */; };
+		041C69B92F0340AC00DD9F74 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041C69B82F0340AC00DD9F74 /* OnboardingView.swift */; };
 		049EC2EF2A371B4F0063B704 /* DateStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049EC2EE2A371B4F0063B704 /* DateStrings.swift */; };
 		049EC2F02A371C870063B704 /* DateStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049EC2EE2A371B4F0063B704 /* DateStrings.swift */; };
 		04DBD2632A3516AD00FBD179 /* ContinuumApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DBD2622A3516AD00FBD179 /* ContinuumApp.swift */; };
@@ -22,13 +27,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		046A6C232F0305A400B27D1E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 04DBD2572A3516AD00FBD179 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 04DBD25E2A3516AD00FBD179;
-			remoteInfo = Continuum;
-		};
 		04DBD2902A3522C700FBD179 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 04DBD2572A3516AD00FBD179 /* Project object */;
@@ -53,7 +51,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		046A6C1D2F0305A400B27D1E /* ContinuumUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContinuumUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		041C69B02F03391F00DD9F74 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		041C69B22F03399200DD9F74 /* AppIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntents.swift; sourceTree = "<group>"; };
+		041C69B32F03399200DD9F74 /* JournalEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalEntry.swift; sourceTree = "<group>"; };
+		041C69B42F03399200DD9F74 /* JournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalView.swift; sourceTree = "<group>"; };
+		041C69B82F0340AC00DD9F74 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		049EC2EE2A371B4F0063B704 /* DateStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateStrings.swift; sourceTree = "<group>"; };
 		04DBD25F2A3516AD00FBD179 /* Continuum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Continuum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04DBD2622A3516AD00FBD179 /* ContinuumApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuumApp.swift; sourceTree = "<group>"; };
@@ -73,13 +75,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		046A6C1A2F0305A400B27D1E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		04DBD25C2A3516AD00FBD179 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -115,7 +110,6 @@
 			children = (
 				04DBD25F2A3516AD00FBD179 /* Continuum.app */,
 				04DBD27D2A3522C600FBD179 /* WidgetExtension.appex */,
-				046A6C1D2F0305A400B27D1E /* ContinuumUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -123,12 +117,17 @@
 		04DBD2612A3516AD00FBD179 /* Continuum */ = {
 			isa = PBXGroup;
 			children = (
+				041C69B22F03399200DD9F74 /* AppIntents.swift */,
+				041C69B32F03399200DD9F74 /* JournalEntry.swift */,
+				041C69B42F03399200DD9F74 /* JournalView.swift */,
+				041C69B02F03391F00DD9F74 /* NotificationManager.swift */,
 				04E9F1A72A380F4700B52914 /* Info.plist */,
 				04DBD2622A3516AD00FBD179 /* ContinuumApp.swift */,
 				04DBD2642A3516AD00FBD179 /* ContentView.swift */,
 				04DBD2662A3516AD00FBD179 /* Assets.xcassets */,
 				04DBD26B2A3516AD00FBD179 /* Continuum.entitlements */,
 				04DBD2682A3516AD00FBD179 /* Preview Content */,
+				041C69B82F0340AC00DD9F74 /* OnboardingView.swift */,
 			);
 			path = Continuum;
 			sourceTree = "<group>";
@@ -165,26 +164,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		046A6C1C2F0305A400B27D1E /* ContinuumUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 046A6C272F0305A400B27D1E /* Build configuration list for PBXNativeTarget "ContinuumUITests" */;
-			buildPhases = (
-				046A6C192F0305A400B27D1E /* Sources */,
-				046A6C1A2F0305A400B27D1E /* Frameworks */,
-				046A6C1B2F0305A400B27D1E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				046A6C242F0305A400B27D1E /* PBXTargetDependency */,
-			);
-			name = ContinuumUITests;
-			packageProductDependencies = (
-			);
-			productName = ContinuumUITests;
-			productReference = 046A6C1D2F0305A400B27D1E /* ContinuumUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 		04DBD25E2A3516AD00FBD179 /* Continuum */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 04DBD26E2A3516AD00FBD179 /* Build configuration list for PBXNativeTarget "Continuum" */;
@@ -231,10 +210,6 @@
 				LastSwiftUpdateCheck = 2620;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
-					046A6C1C2F0305A400B27D1E = {
-						CreatedOnToolsVersion = 26.2;
-						TestTargetID = 04DBD25E2A3516AD00FBD179;
-					};
 					04DBD25E2A3516AD00FBD179 = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
@@ -258,19 +233,11 @@
 			targets = (
 				04DBD25E2A3516AD00FBD179 /* Continuum */,
 				04DBD27C2A3522C600FBD179 /* WidgetExtension */,
-				046A6C1C2F0305A400B27D1E /* ContinuumUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		046A6C1B2F0305A400B27D1E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		04DBD25D2A3516AD00FBD179 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -291,19 +258,17 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		046A6C192F0305A400B27D1E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		04DBD25B2A3516AD00FBD179 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				04DBD2652A3516AD00FBD179 /* ContentView.swift in Sources */,
 				04DBD2632A3516AD00FBD179 /* ContinuumApp.swift in Sources */,
+				041C69B52F03399200DD9F74 /* JournalEntry.swift in Sources */,
+				041C69B62F03399200DD9F74 /* JournalView.swift in Sources */,
+				041C69B72F03399200DD9F74 /* AppIntents.swift in Sources */,
+				041C69B92F0340AC00DD9F74 /* OnboardingView.swift in Sources */,
+				041C69B12F03391F00DD9F74 /* NotificationManager.swift in Sources */,
 				049EC2EF2A371B4F0063B704 /* DateStrings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -321,11 +286,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		046A6C242F0305A400B27D1E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 04DBD25E2A3516AD00FBD179 /* Continuum */;
-			targetProxy = 046A6C232F0305A400B27D1E /* PBXContainerItemProxy */;
-		};
 		04DBD2912A3522C700FBD179 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 04DBD27C2A3522C600FBD179 /* WidgetExtension */;
@@ -334,57 +294,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		046A6C252F0305A400B27D1E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = 3DB2G9C8Z2;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = systems.weekend.continuum.ContinuumUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Continuum;
-			};
-			name = Debug;
-		};
-		046A6C262F0305A400B27D1E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = 3DB2G9C8Z2;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = systems.weekend.continuum.ContinuumUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Continuum;
-			};
-			name = Release;
-		};
 		04DBD26C2A3516AD00FBD179 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -508,7 +417,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Continuum/Continuum.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Continuum/Preview Content\"";
 				DEVELOPMENT_TEAM = 3DB2G9C8Z2;
 				ENABLE_PREVIEWS = YES;
@@ -539,7 +448,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Continuum/Continuum.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Continuum/Preview Content\"";
 				DEVELOPMENT_TEAM = 3DB2G9C8Z2;
 				ENABLE_PREVIEWS = YES;
@@ -570,7 +479,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = Widget/WidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 3DB2G9C8Z2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/Info.plist;
@@ -600,7 +509,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = Widget/WidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 3DB2G9C8Z2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/Info.plist;
@@ -627,15 +536,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		046A6C272F0305A400B27D1E /* Build configuration list for PBXNativeTarget "ContinuumUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				046A6C252F0305A400B27D1E /* Debug */,
-				046A6C262F0305A400B27D1E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		04DBD25A2A3516AD00FBD179 /* Build configuration list for PBXProject "Continuum" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
