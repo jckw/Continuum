@@ -192,6 +192,7 @@ struct ContinuumWidget: Widget {
       provider: Provider()
     ) { entry in
       WidgetEntryView(entry: entry)
+        .containerBackground(.fill.tertiary, for: .widget)
     }
     .configurationDisplayName("Continuum Clock")
     .description("See how much time you have at a glance.")
