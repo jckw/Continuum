@@ -5,3 +5,4 @@ source 'https://rubygems.org'
 # gem "rails"
 
 gem 'rubocop', '~> 1.56'
+gem 'fastlane'

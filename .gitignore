@@ -1,0 +1,25 @@
+# Ruby/Bundler
+vendor/
+.bundle/
+
+# Fastlane
+fastlane/.env
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# Build output
+build/
+
+# Xcode
+*.xcuserstate
+*.xcscmblueprint
+xcuserdata/
+DerivedData/
+
+# CocoaPods (if used later)
+Pods/
+
+# macOS
+.DS_Store
