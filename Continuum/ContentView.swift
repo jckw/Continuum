@@ -9,7 +9,7 @@ import SwiftUI
 import WidgetKit
 
 struct ContentView: View {
-  let sharedUserDefaults = UserDefaults(suiteName: "group.G2Q4VASTYV.xyz.jackw.continuum")!
+  let sharedUserDefaults = UserDefaults(suiteName: "group.systems.weekend.continuum")!
 
   @State private var startTime: Date
   @State private var endTime: Date

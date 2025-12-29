@@ -400,7 +400,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Continuum/Preview Content\"";
-				DEVELOPMENT_TEAM = G2Q4VASTYV;
+				DEVELOPMENT_TEAM = 3DB2G9C8Z2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Continuum/Info.plist;
@@ -414,7 +414,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = xyz.jckw.continuum;
+				PRODUCT_BUNDLE_IDENTIFIER = systems.weekend.continuum;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -432,7 +432,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Continuum/Preview Content\"";
-				DEVELOPMENT_TEAM = G2Q4VASTYV;
+				DEVELOPMENT_TEAM = 3DB2G9C8Z2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Continuum/Info.plist;
@@ -446,7 +446,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = xyz.jckw.continuum;
+				PRODUCT_BUNDLE_IDENTIFIER = systems.weekend.continuum;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -462,7 +462,7 @@
 				CODE_SIGN_ENTITLEMENTS = Widget/WidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = G2Q4VASTYV;
+				DEVELOPMENT_TEAM = 3DB2G9C8Z2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Continuum Widget";
@@ -474,7 +474,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = xyz.jckw.continuum.Widget;
+				PRODUCT_BUNDLE_IDENTIFIER = systems.weekend.continuum.AppWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -492,7 +492,7 @@
 				CODE_SIGN_ENTITLEMENTS = Widget/WidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = G2Q4VASTYV;
+				DEVELOPMENT_TEAM = 3DB2G9C8Z2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Continuum Widget";
@@ -504,7 +504,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = xyz.jckw.continuum.Widget;
+				PRODUCT_BUNDLE_IDENTIFIER = systems.weekend.continuum.AppWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;

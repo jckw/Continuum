@@ -9,7 +9,7 @@ import SwiftUI
 import WidgetKit
 
 struct Provider: TimelineProvider {
-  let sharedUserDefaults = UserDefaults(suiteName: "group.G2Q4VASTYV.xyz.jackw.continuum")!
+  let sharedUserDefaults = UserDefaults(suiteName: "group.systems.weekend.continuum")!
 
   func placeholder(in context: Context) -> SimpleEntry {
     let (progress, mode) = Provider.calculateProgressAndMode(
