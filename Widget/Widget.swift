@@ -136,6 +136,11 @@ struct WidgetEntryView: View {
 
   var entry: Provider.Entry
 
+  private var hoursRemaining: Int {
+    let seconds = entry.periodEndDate.timeIntervalSince(entry.date)
+    return max(0, Int(seconds / 3600))
+  }
+  
   var body: some View {
     switch widgetFamily {
     case .accessoryCircular:
@@ -147,13 +152,15 @@ struct WidgetEntryView: View {
           }
         }
         .gaugeStyle(.accessoryCircularCapacity)
+        .containerBackground(.clear, for: .widget)
       } else {
         VStack {
           Image(systemName: "moon").font(.caption2)
-          Text(entry.periodEndDate, style: .relative)
+          Text("\(hoursRemaining)h")
             .font(.caption2)
             .multilineTextAlignment(.center)
         }
+        .containerBackground(.clear, for: .widget)
       }
 
     case .systemSmall:
@@ -164,10 +171,11 @@ struct WidgetEntryView: View {
             Text("ends in").font(
               .system(.caption2, design: .rounded).bold()
             )
-            Text(entry.periodEndDate, style: .relative).font(
+            Text("\(hoursRemaining)h").font(
               .system(.caption2, design: .rounded).bold()
             ).lineLimit(1)
           }
+          .foregroundStyle(.white.opacity(0.85))
           .padding(.leading)
           .padding(.top)
           .frame(maxWidth: .infinity, alignment: .leading)
@@ -177,34 +185,55 @@ struct WidgetEntryView: View {
           Text("\(100 - entry.progress)%")
             .font(.system(.largeTitle, design: .rounded))
             .fontWeight(.bold)
+            .foregroundStyle(.white)
           
           Text("remaining in day")
             .font(.system(.callout, design: .rounded))
+            .foregroundStyle(.white.opacity(0.85))
           
           Spacer()
 
           Text("\(entry.progress)% complete")
             .font(.system(.caption, design: .rounded))
+            .foregroundStyle(.white.opacity(0.7))
             .padding(.bottom)
             .padding(.top, 8)
+        }
+        .containerBackground(for: .widget) {
+          LinearGradient(
+            colors: [Color.orange, Color.orange.opacity(0.85)],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+          )
         }
       } else {
         VStack {
           Spacer()
           Image(systemName: "moon")
             .font(.title2)
+            .foregroundStyle(.white.opacity(0.95))
             .padding(.bottom, 4)
           Text("Your day begins in")
             .font(.system(.caption, design: .rounded))
-          Text(entry.periodEndDate, style: .relative)
+            .foregroundStyle(.white.opacity(0.85))
+          Text("\(hoursRemaining)h")
             .font(.system(.title2, design: .rounded))
             .fontWeight(.medium)
+            .foregroundStyle(.white)
           Spacer()
+        }
+        .containerBackground(for: .widget) {
+          LinearGradient(
+            colors: [Color.indigo, Color.indigo.opacity(0.85)],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+          )
         }
       }
 
     default:
       Text("Not yet implemented")
+        .containerBackground(.fill.tertiary, for: .widget)
     }
 
   }
@@ -219,7 +248,6 @@ struct ContinuumWidget: Widget {
       provider: Provider()
     ) { entry in
       WidgetEntryView(entry: entry)
-        .containerBackground(.fill.tertiary, for: .widget)
     }
     .configurationDisplayName("Continuum Clock")
     .description("See how much time you have at a glance.")
