@@ -320,13 +320,24 @@ struct EntryEditorSheet: View {
 
   var body: some View {
     NavigationStack {
-      TextEditor(text: $content)
-        .focused($contentIsFocused)
-        .font(.body)
-        .scrollContentBackground(.hidden)
-        .padding(.horizontal, 20)
-        .padding(.top, 8)
-        .navigationBarTitleDisplayMode(.inline)
+      ZStack(alignment: .topLeading) {
+        TextEditor(text: $content)
+          .focused($contentIsFocused)
+          .font(.body)
+          .scrollContentBackground(.hidden)
+        
+        if content.isEmpty {
+          Text("What's on your mind?")
+            .font(.body)
+            .foregroundStyle(.tertiary)
+            .padding(.top, 8)
+            .padding(.leading, 5)
+            .allowsHitTesting(false)
+        }
+      }
+      .padding(.horizontal, 20)
+      .padding(.top, 8)
+      .navigationBarTitleDisplayMode(.inline)
         .toolbar {
           ToolbarItem(placement: .principal) {
             VStack(spacing: 2) {

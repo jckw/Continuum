@@ -12,46 +12,122 @@ struct OnboardingView: View {
   @Environment(\.dismiss) private var dismiss
   @State private var currentPage = 0
   
+  let sharedUserDefaults = UserDefaults(suiteName: "group.systems.weekend.continuum")!
+  @State private var startTime: Date
+  @State private var endTime: Date
+  @StateObject private var notificationManager = NotificationManager.shared
+  
+  init() {
+    let defaults = UserDefaults(suiteName: "group.systems.weekend.continuum")!
+    let startTimeStr = defaults.string(forKey: "startTimeStr")
+    let endTimeStr = defaults.string(forKey: "endTimeStr")
+    
+    _startTime = State(initialValue: DateStrings.date(from: startTimeStr, default: "09:00"))
+    _endTime = State(initialValue: DateStrings.date(from: endTimeStr, default: "23:00"))
+  }
+  
   var body: some View {
     VStack(spacing: 0) {
+      // Back button area
+      HStack {
+        if currentPage > 0 {
+          OnboardingBackButton {
+            withAnimation(.easeInOut(duration: 0.3)) {
+              currentPage -= 1
+            }
+          }
+        }
+        Spacer()
+      }
+      .padding(.horizontal, 20)
+      .padding(.top, 16)
+      .frame(height: 52)
+      
+      // Content carousel - swipeable
       TabView(selection: $currentPage) {
-        WelcomeScreen(currentPage: $currentPage)
+        WelcomeContent()
           .tag(0)
         
-        SetYourDayScreen(currentPage: $currentPage)
+        SetYourDayContent(
+          startTime: $startTime,
+          endTime: $endTime,
+          sharedUserDefaults: sharedUserDefaults
+        )
           .tag(1)
         
-        StayAwareScreen(currentPage: $currentPage, onComplete: {
-          completeOnboarding()
-        })
+        StayAwareContent(notificationManager: notificationManager)
           .tag(2)
       }
       .tabViewStyle(.page(indexDisplayMode: .never))
       
-      // Custom page indicator
-      HStack(spacing: 8) {
-        ForEach(0..<3) { index in
-          Circle()
-            .fill(currentPage == index ? Color.primary : Color.secondary.opacity(0.3))
-            .frame(width: 8, height: 8)
+      // Fixed bottom area
+      VStack(spacing: 20) {
+        PageIndicator(currentPage: currentPage)
+        
+        Button {
+          if currentPage < 2 {
+            withAnimation(.easeInOut(duration: 0.3)) {
+              currentPage += 1
+            }
+          } else {
+            completeOnboarding()
+          }
+        } label: {
+          Text(currentPage == 2 ? "Get Started" : "Continue")
+            .font(.headline)
+            .foregroundStyle(.white)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 16)
+            .background(Color.accentColor)
+            .clipShape(RoundedRectangle(cornerRadius: 14))
         }
+        .padding(.horizontal, 40)
       }
-      .padding(.bottom, 50)
-      .animation(.easeInOut, value: currentPage)
+      .padding(.bottom, 20)
     }
     .interactiveDismissDisabled()
   }
   
   private func completeOnboarding() {
-    let defaults = UserDefaults(suiteName: "group.systems.weekend.continuum")!
-    defaults.set(true, forKey: "hasCompletedOnboarding")
+    sharedUserDefaults.set(true, forKey: "hasCompletedOnboarding")
     dismiss()
   }
 }
 
-// MARK: - Screen 1: Welcome
-struct WelcomeScreen: View {
-  @Binding var currentPage: Int
+// MARK: - Page Indicator
+struct PageIndicator: View {
+  let currentPage: Int
+  let totalPages: Int = 3
+  
+  var body: some View {
+    HStack(spacing: 8) {
+      ForEach(0..<totalPages, id: \.self) { index in
+        Circle()
+          .fill(currentPage == index ? Color.primary : Color.secondary.opacity(0.3))
+          .frame(width: 8, height: 8)
+      }
+    }
+  }
+}
+
+// MARK: - Back Button
+struct OnboardingBackButton: View {
+  let action: () -> Void
+  
+  var body: some View {
+    Button(action: action) {
+      Image(systemName: "chevron.left")
+        .font(.system(size: 16, weight: .semibold))
+        .foregroundStyle(.primary)
+        .frame(width: 36, height: 36)
+        .background(Color.secondary.opacity(0.15))
+        .clipShape(Circle())
+    }
+  }
+}
+
+// MARK: - Content 1: Welcome
+struct WelcomeContent: View {
   @State private var iconScale: CGFloat = 1.0
   
   var body: some View {
@@ -95,47 +171,17 @@ struct WelcomeScreen: View {
         .padding(.horizontal, 40)
       
       Spacer()
-      Spacer()
-      
-      Button {
-        withAnimation(.easeInOut(duration: 0.3)) {
-          currentPage = 1
-        }
-      } label: {
-        Text("Continue")
-          .font(.headline)
-          .foregroundStyle(.white)
-          .frame(maxWidth: .infinity)
-          .padding(.vertical, 16)
-          .background(Color.accentColor)
-          .clipShape(RoundedRectangle(cornerRadius: 14))
-      }
-      .padding(.horizontal, 40)
-      .padding(.bottom, 20)
     }
   }
 }
 
-// MARK: - Screen 2: Set Your Day
-struct SetYourDayScreen: View {
-  @Binding var currentPage: Int
+// MARK: - Content 2: Set Your Day
+struct SetYourDayContent: View {
+  @Binding var startTime: Date
+  @Binding var endTime: Date
+  let sharedUserDefaults: UserDefaults
   
-  let sharedUserDefaults = UserDefaults(suiteName: "group.systems.weekend.continuum")!
-  
-  @State private var startTime: Date
-  @State private var endTime: Date
   @State private var clockRotation: Double = 0
-  
-  init(currentPage: Binding<Int>) {
-    self._currentPage = currentPage
-    
-    let defaults = UserDefaults(suiteName: "group.systems.weekend.continuum")!
-    let startTimeStr = defaults.string(forKey: "startTimeStr")
-    let endTimeStr = defaults.string(forKey: "endTimeStr")
-    
-    _startTime = State(initialValue: DateStrings.date(from: startTimeStr, default: "09:00"))
-    _endTime = State(initialValue: DateStrings.date(from: endTimeStr, default: "23:00"))
-  }
   
   var body: some View {
     VStack(spacing: 0) {
@@ -203,49 +249,13 @@ struct SetYourDayScreen: View {
       .padding(.horizontal, 40)
       
       Spacer()
-      Spacer()
-      
-      HStack(spacing: 12) {
-        Button {
-          withAnimation(.easeInOut(duration: 0.3)) {
-            currentPage = 0
-          }
-        } label: {
-          Text("Back")
-            .font(.headline)
-            .foregroundStyle(.primary)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 16)
-            .background(Color.secondary.opacity(0.15))
-            .clipShape(RoundedRectangle(cornerRadius: 14))
-        }
-        
-        Button {
-          withAnimation(.easeInOut(duration: 0.3)) {
-            currentPage = 2
-          }
-        } label: {
-          Text("Continue")
-            .font(.headline)
-            .foregroundStyle(.white)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 16)
-            .background(Color.accentColor)
-            .clipShape(RoundedRectangle(cornerRadius: 14))
-        }
-      }
-      .padding(.horizontal, 40)
-      .padding(.bottom, 20)
     }
   }
 }
 
-// MARK: - Screen 3: Stay Aware
-struct StayAwareScreen: View {
-  @Binding var currentPage: Int
-  let onComplete: () -> Void
-  
-  @StateObject private var notificationManager = NotificationManager.shared
+// MARK: - Content 3: Stay Aware
+struct StayAwareContent: View {
+  @ObservedObject var notificationManager: NotificationManager
   @State private var bellBounce: Bool = false
   
   var body: some View {
@@ -289,14 +299,12 @@ struct StayAwareScreen: View {
               Task {
                 let granted = await notificationManager.requestPermission()
                 if granted {
-                  // Automatically enable the 50% notification
                   notificationManager.settings.thresholds.insert(50)
                 } else {
                   notificationManager.settings.enabled = false
                 }
               }
             } else if !newValue {
-              // Remove the 50% notification when disabled
               notificationManager.settings.thresholds.remove(50)
             }
           }
@@ -316,37 +324,6 @@ struct StayAwareScreen: View {
       .padding(.horizontal, 40)
       
       Spacer()
-      Spacer()
-      
-      HStack(spacing: 12) {
-        Button {
-          withAnimation(.easeInOut(duration: 0.3)) {
-            currentPage = 1
-          }
-        } label: {
-          Text("Back")
-            .font(.headline)
-            .foregroundStyle(.primary)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 16)
-            .background(Color.secondary.opacity(0.15))
-            .clipShape(RoundedRectangle(cornerRadius: 14))
-        }
-        
-        Button {
-          onComplete()
-        } label: {
-          Text("Get Started")
-            .font(.headline)
-            .foregroundStyle(.white)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 16)
-            .background(Color.accentColor)
-            .clipShape(RoundedRectangle(cornerRadius: 14))
-        }
-      }
-      .padding(.horizontal, 40)
-      .padding(.bottom, 20)
     }
   }
 }
