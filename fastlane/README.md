@@ -45,7 +45,15 @@ Build for development
 [bundle exec] fastlane ios beta
 ```
 
-Upload to TestFlight
+Upload to TestFlight (internal only)
+
+### ios beta_external
+
+```sh
+[bundle exec] fastlane ios beta_external
+```
+
+Upload to TestFlight and distribute to external testers
 
 ### ios metadata
 
@@ -62,14 +70,6 @@ Upload metadata only (no build)
 ```
 
 Upload to App Store with metadata
-
-### ios screenshots
-
-```sh
-[bundle exec] fastlane ios screenshots
-```
-
-Capture App Store screenshots
 
 ### ios submit
 

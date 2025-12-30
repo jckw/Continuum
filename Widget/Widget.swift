@@ -164,7 +164,7 @@ struct WidgetEntryView: View {
             Text("ends in").font(
               .system(.caption2, design: .rounded).bold()
             )
-            Text(entry.periodEndDate, style: .offset).font(
+            Text(entry.periodEndDate, style: .timer).font(
               .system(.caption2, design: .rounded).bold()
             ).lineLimit(1)
           }
