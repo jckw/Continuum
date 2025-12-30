@@ -103,6 +103,7 @@ struct iPhoneContentView: View {
 
 struct TodayView: View {
   @Environment(\.modelContext) private var modelContext
+  @Environment(\.scenePhase) private var scenePhase
   @Query(sort: \JournalEntry.date, order: .reverse) private var allEntries: [JournalEntry]
   
   let sharedUserDefaults = UserDefaults(suiteName: "group.systems.weekend.continuum")!
@@ -113,12 +114,15 @@ struct TodayView: View {
   @State private var showingCalendar = false
   @State private var showingEntrySheet = false
   @State private var editingEntry: JournalEntry?
+  @State private var currentTime = Date()
+  
+  let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
 
   var body: some View {
     let startTimeStr = sharedUserDefaults.string(forKey: "startTimeStr") ?? "09:00"
     let endTimeStr = sharedUserDefaults.string(forKey: "endTimeStr") ?? "23:00"
 
-    let now = Date()
+    let now = currentTime
     let startToEndMins = DateStrings.clockwiseDistance(from: startTimeStr, to: endTimeStr) ?? 0
     let startToNowMins = DateStrings.clockwiseDistance(from: startTimeStr, to: now) ?? 0
 
@@ -183,6 +187,7 @@ struct TodayView: View {
                   .monospacedDigit()
               }
             }
+            .frame(maxWidth: .infinity)
             .padding(.horizontal, 32)
             .padding(.vertical, 44)
             .background(
@@ -230,6 +235,7 @@ struct TodayView: View {
                 .foregroundStyle(.white.opacity(0.7))
                 .monospacedDigit()
             }
+            .frame(maxWidth: .infinity)
             .padding(.horizontal, 32)
             .padding(.vertical, 44)
             .background(
@@ -244,7 +250,6 @@ struct TodayView: View {
             )
           }
         }
-        .frame(maxWidth: .infinity)
         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
         .shadow(color: Color.black.opacity(0.1), radius: 20, x: 0, y: 8)
         .padding(.horizontal, 20)
@@ -355,6 +360,17 @@ struct TodayView: View {
     }
     .sheet(isPresented: $showingCalendar) {
       CalendarNavigationView()
+    }
+    .onReceive(timer) { _ in
+      currentTime = Date()
+    }
+    .onChange(of: scenePhase) { _, newPhase in
+      if newPhase == .active {
+        currentTime = Date()
+      }
+    }
+    .onAppear {
+      currentTime = Date()
     }
   }
   

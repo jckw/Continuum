@@ -150,7 +150,7 @@ struct WidgetEntryView: View {
       } else {
         VStack {
           Image(systemName: "moon").font(.caption2)
-          Text(entry.periodEndDate, style: .timer)
+          Text(entry.periodEndDate, style: .relative)
             .font(.caption2)
             .multilineTextAlignment(.center)
         }
@@ -164,7 +164,7 @@ struct WidgetEntryView: View {
             Text("ends in").font(
               .system(.caption2, design: .rounded).bold()
             )
-            Text(entry.periodEndDate, style: .timer).font(
+            Text(entry.periodEndDate, style: .relative).font(
               .system(.caption2, design: .rounded).bold()
             ).lineLimit(1)
           }
@@ -196,10 +196,9 @@ struct WidgetEntryView: View {
             .padding(.bottom, 4)
           Text("Your day begins in")
             .font(.system(.caption, design: .rounded))
-          Text(entry.periodEndDate, style: .timer)
+          Text(entry.periodEndDate, style: .relative)
             .font(.system(.title2, design: .rounded))
             .fontWeight(.medium)
-            .monospacedDigit()
           Spacer()
         }
       }
