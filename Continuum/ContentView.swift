@@ -116,6 +116,10 @@ struct TodayView: View {
   @State private var editingEntry: JournalEntry?
   @State private var currentTime = Date()
   
+  @StateObject private var scheduleManager = ScheduleManager.shared
+  @State private var showingScheduleSheet = false
+  @State private var editingScheduleItem: ScheduleItem?
+  
   let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
 
   var body: some View {
@@ -283,7 +287,7 @@ struct TodayView: View {
               HStack {
                 Image(systemName: "square.and.pencil")
                   .font(.title2)
-                  .foregroundStyle(.tertiary)
+                  .foregroundStyle(.secondary)
                 
                 VStack(alignment: .leading, spacing: 2) {
                   Text("No notes yet")
@@ -302,10 +306,11 @@ struct TodayView: View {
                   .font(.caption)
                   .foregroundStyle(.tertiary)
               }
-              .padding(16)
+              .padding(12)
               .background(Color(uiColor: .secondarySystemGroupedBackground))
-              .cornerRadius(12)
+              .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
             }
+            .buttonStyle(.plain)
             .padding(.horizontal, 16)
           } else {
             LazyVStack(spacing: 10) {
@@ -326,6 +331,14 @@ struct TodayView: View {
           }
         }
         
+        // Schedule section
+        ScheduleSection(
+          scheduleManager: scheduleManager,
+          wakingMinutes: startToEndMins,
+          showingAddSheet: $showingScheduleSheet,
+          editingItem: $editingScheduleItem
+        )
+        
         // Tips section
         VStack(spacing: 10) {
           TipView(homeScreenTip)
@@ -335,6 +348,7 @@ struct TodayView: View {
         .padding(.bottom, 16)
       }
     }
+    .background(Color(uiColor: .systemGroupedBackground))
     .navigationBarTitleDisplayMode(.inline)
     .toolbar {
       ToolbarItem(placement: .principal) {
@@ -360,6 +374,12 @@ struct TodayView: View {
     }
     .sheet(isPresented: $showingCalendar) {
       CalendarNavigationView()
+    }
+    .sheet(isPresented: $showingScheduleSheet) {
+      AddEditScheduleSheet(
+        scheduleManager: scheduleManager,
+        editingItem: editingScheduleItem
+      )
     }
     .onReceive(timer) { _ in
       currentTime = Date()

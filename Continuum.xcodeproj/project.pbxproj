@@ -12,6 +12,8 @@
 		041C69B62F03399200DD9F74 /* JournalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041C69B42F03399200DD9F74 /* JournalView.swift */; };
 		041C69B72F03399200DD9F74 /* AppIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041C69B22F03399200DD9F74 /* AppIntents.swift */; };
 		041C69B92F0340AC00DD9F74 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041C69B82F0340AC00DD9F74 /* OnboardingView.swift */; };
+		041C6A972F05832400DD9F74 /* ScheduleViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041C6A962F05832400DD9F74 /* ScheduleViews.swift */; };
+		041C6A982F05832400DD9F74 /* ScheduleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041C6A952F05832400DD9F74 /* ScheduleItem.swift */; };
 		049EC2EF2A371B4F0063B704 /* DateStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049EC2EE2A371B4F0063B704 /* DateStrings.swift */; };
 		049EC2F02A371C870063B704 /* DateStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049EC2EE2A371B4F0063B704 /* DateStrings.swift */; };
 		04DBD2632A3516AD00FBD179 /* ContinuumApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DBD2622A3516AD00FBD179 /* ContinuumApp.swift */; };
@@ -56,6 +58,8 @@
 		041C69B32F03399200DD9F74 /* JournalEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalEntry.swift; sourceTree = "<group>"; };
 		041C69B42F03399200DD9F74 /* JournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalView.swift; sourceTree = "<group>"; };
 		041C69B82F0340AC00DD9F74 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		041C6A952F05832400DD9F74 /* ScheduleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleItem.swift; sourceTree = "<group>"; };
+		041C6A962F05832400DD9F74 /* ScheduleViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViews.swift; sourceTree = "<group>"; };
 		049EC2EE2A371B4F0063B704 /* DateStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateStrings.swift; sourceTree = "<group>"; };
 		04DBD25F2A3516AD00FBD179 /* Continuum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Continuum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04DBD2622A3516AD00FBD179 /* ContinuumApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuumApp.swift; sourceTree = "<group>"; };
@@ -117,6 +121,8 @@
 		04DBD2612A3516AD00FBD179 /* Continuum */ = {
 			isa = PBXGroup;
 			children = (
+				041C6A952F05832400DD9F74 /* ScheduleItem.swift */,
+				041C6A962F05832400DD9F74 /* ScheduleViews.swift */,
 				041C69B22F03399200DD9F74 /* AppIntents.swift */,
 				041C69B32F03399200DD9F74 /* JournalEntry.swift */,
 				041C69B42F03399200DD9F74 /* JournalView.swift */,
@@ -268,6 +274,8 @@
 				041C69B62F03399200DD9F74 /* JournalView.swift in Sources */,
 				041C69B72F03399200DD9F74 /* AppIntents.swift in Sources */,
 				041C69B92F0340AC00DD9F74 /* OnboardingView.swift in Sources */,
+				041C6A972F05832400DD9F74 /* ScheduleViews.swift in Sources */,
+				041C6A982F05832400DD9F74 /* ScheduleItem.swift in Sources */,
 				041C69B12F03391F00DD9F74 /* NotificationManager.swift in Sources */,
 				049EC2EF2A371B4F0063B704 /* DateStrings.swift in Sources */,
 			);
@@ -417,7 +425,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Continuum/Continuum.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"Continuum/Preview Content\"";
 				DEVELOPMENT_TEAM = 3DB2G9C8Z2;
 				ENABLE_PREVIEWS = YES;
@@ -448,7 +456,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Continuum/Continuum.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"Continuum/Preview Content\"";
 				DEVELOPMENT_TEAM = 3DB2G9C8Z2;
 				ENABLE_PREVIEWS = YES;
@@ -479,7 +487,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = Widget/WidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 3DB2G9C8Z2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/Info.plist;
@@ -509,7 +517,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = Widget/WidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 3DB2G9C8Z2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/Info.plist;
